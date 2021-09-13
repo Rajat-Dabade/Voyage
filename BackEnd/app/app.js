@@ -46,9 +46,9 @@ cron.schedule('0 0 * * *', () => {
 
 const Role = db.role;
 
-db.sequelize.sync({force: true}).then(() => {
+db.sequelize.sync({force: false}).then(() => {
     console.log("Drop and resync db");
-    initial();
+    // initial();
 })
 
 const initial = () => {
@@ -65,5 +65,7 @@ const initial = () => {
 
 require('./routes/authenticate.routes')(app);
 require('./routes/searchFlight.routes')(app);
+require('./routes/auth.routes')(app);
+require('./routes/admin.routes')(app);
 
 module.exports = app;

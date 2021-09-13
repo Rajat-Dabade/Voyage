@@ -39,19 +39,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         credits: {
-            type: DataTypes.STRING,
+            type: DataTypes.DOUBLE,
             allowNull: false
         },
-        createDateTime: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        updateDateTime: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        updateCount: {
-            type: DataTypes.STRING,
+        activation: {
+            type: DataTypes.BOOLEAN,
             allowNull: false
         }
     });
