@@ -67,5 +67,9 @@ require('./routes/authenticate.routes')(app);
 require('./routes/searchFlight.routes')(app);
 require('./routes/auth.routes')(app);
 require('./routes/admin.routes')(app);
+require('./routes/fareRule.routes')(app);
+require('./routes/fareQoute.routes')(app);
+require('./routes/ssr.routes')(app);
+require('./routes/book.routes')(app);
 
 module.exports = app;

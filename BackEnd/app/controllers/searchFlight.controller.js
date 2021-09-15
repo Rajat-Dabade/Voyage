@@ -39,6 +39,11 @@ exports.getSearchResults = async (req, res) => {
             method: 'POST',
             body: JSON.stringify(requestObject),
             headers: { 'Content-Type': 'application/json' }
+        }).catch(err => {
+            console.log(err);
+            return res.status(201).send({
+                message: "Cant able to fetch the data please try again!"
+            });
         });
     const data = await response.json();
     res.status(200).send(data);
