@@ -64,12 +64,17 @@ const initial = () => {
 }
 
 require('./routes/authenticate.routes')(app);
-require('./routes/searchFlight.routes')(app);
+require('./routes/flight/searchFlight.routes')(app);
 require('./routes/auth.routes')(app);
-require('./routes/admin.routes')(app);
-require('./routes/fareRule.routes')(app);
-require('./routes/fareQoute.routes')(app);
-require('./routes/ssr.routes')(app);
-require('./routes/book.routes')(app);
+require('./routes/admin/admin.routes')(app);
+require('./routes/flight/fareRule.routes')(app);
+require('./routes/flight/fareQoute.routes')(app);
+require('./routes/flight/ssr.routes')(app);
+require('./routes/flight/book.routes')(app);
+require('./routes/flight/ticket.routes')(app);
+require('./routes/flight/cancellation/releasePnrRequest.routes')(app);
+require('./routes/flight/cancellation/sendChangeRequest.routes')(app);
+require('./routes/flight/cancellation/getChangeRequestStatus.routes')(app);
+require('./routes/flight/cancellation/cancellationCharges.routes')(app);
 
 module.exports = app;
