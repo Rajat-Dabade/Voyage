@@ -3,7 +3,7 @@ const fs = require('fs');
 
 let tokenId;
 
-fs.readFile(__dirname + '/../config/tokenId.json', 'utf-8', (err, tokenData) => {
+fs.readFile(__dirname + '/../../config/tokenId.json', 'utf-8', (err, tokenData) => {
     if (err) {
         console.log(err);
     } else {
@@ -37,14 +37,14 @@ exports.ticket = async (req, res) => {
             },
             "City": req.body.City,
             "CountryCode": req.body.CountryCode,
-            "CountryName": req.body.CountryName,      
+            "CountryName": req.body.CountryName,
             "Nationality": req.body.Nationality,
             "ContactNo": req.body.ContactNo,
             "Email": req.body.Email,
             "IsLeadPax": req.body.IsLeadPax,
             "FFAirlineCode": req.body.FFAirlineCode,
             "FFNumber": req.body.FFNumber,
-        "Baggage":[
+            "Baggage": [
                 {
                     "AirlineCode": req.body.AirlineCode,
                     "FlightNumber": req.body.FlightNumber,
@@ -53,30 +53,30 @@ exports.ticket = async (req, res) => {
                     "Description": req.body.Description,
                     "Weight": req.body.Weight,
                     "Currency": req.body.Currency,
-                     "Price": req.body.Price,
-                     "Origin": req.body.Origin,
+                    "Price": req.body.Price,
+                    "Origin": req.body.Origin,
                     "Destination": req.body.Destination
-            }],
+                }],
             "MealDynamic": [
-            {
-              "AirlineCode": req.body.AirlineCode,
-              "FlightNumber": req.body.FlightNumber,
-              "WayType": req.body.WayType,
-              "Code": req.body.Code,
-              "Description": req.body.Description,
-              "AirlineDescription": req.body.AirlineDescription,
-              "Quantity": req.body.Quantity,
-              "Currency": req.body.Currency,
-              "Price": req.body.Price,
-              "Origin": req.body.Origin,
-              "Destination": req.body.Destination
-            }],
-        "SeatDynamic": [
-            {
-            "AirlineCode": req.body.AirlineCode,
-                 "FlightNumber": req.body.FlightNumber,
-                  "CraftType": req.body.CraftType,
-                   "Origin": req.body.Origin,
+                {
+                    "AirlineCode": req.body.AirlineCode,
+                    "FlightNumber": req.body.FlightNumber,
+                    "WayType": req.body.WayType,
+                    "Code": req.body.Code,
+                    "Description": req.body.Description,
+                    "AirlineDescription": req.body.AirlineDescription,
+                    "Quantity": req.body.Quantity,
+                    "Currency": req.body.Currency,
+                    "Price": req.body.Price,
+                    "Origin": req.body.Origin,
+                    "Destination": req.body.Destination
+                }],
+            "SeatDynamic": [
+                {
+                    "AirlineCode": req.body.AirlineCode,
+                    "FlightNumber": req.body.FlightNumber,
+                    "CraftType": req.body.CraftType,
+                    "Origin": req.body.Origin,
                     "Destination": req.body.Destination,
                     "AvailablityType": req.body.AvailablityType,
                     "Description": req.body.Description,
@@ -88,9 +88,9 @@ exports.ticket = async (req, res) => {
                     "Compartment": req.body.Compartment,
                     "Deck": req.body.Deck,
                     "Currency": req.body.Currency,
-                    "Price": req.body.Price                                                                                                                                                                                                      
-                
-            }],
+                    "Price": req.body.Price
+
+                }],
             "GSTCompanyAddress": req.body.GSTCompanyAddress,
             "GSTCompanyContactNumber": req.body.GSTCompanyContactNumber,
             "GSTCompanyName": req.body.GSTCompanyName,
@@ -102,18 +102,19 @@ exports.ticket = async (req, res) => {
         "TraceId": req.body.TraceId
     }
 
-    const response = await fetch('http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Ticket',
+    fetch('http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Ticket',
         {
             method: 'POST',
             body: JSON.stringify(requestObject),
-            headers: {'Content-Type': 'application/json'}
-        }).catch(err => {
-            return res.status(201).send({
-                message: "Cant able to fetch the ticket, please try again after sometime"
-            })
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(res => res.json())
+        .then(data => {
+            res.status(200).send(data);
+        })
+        .catch(err => {
+            res.status(201).send({
+                message: "Cant able to book the ticket, please try again after sometime"
+            });
         });
-
-    const data = await response.json();
-    res.status(200).send(data);
-
 }

@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 
 let tokenId;
 
-fs.readFile(__dirname + '/../config/tokenId.json', 'utf-8', (err, tokenData) => {
+fs.readFile(__dirname + '/../../config/tokenId.json', 'utf-8', (err, tokenData) => {
     if (err) {
         console.log(err);
     } else {
@@ -20,17 +20,20 @@ exports.getFareQoute = async (req, res) => {
         "ResultIndex": req.body.ResultIndex
     };
 
-    const response = await fetch('http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/FareQuote',
+    fetch('http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/FareQuote',
         {
             method: "POST",
             body: JSON.stringify(requestObject),
             headers: {'Content-Type' : 'application/json'}
-        }).catch(err => {
+        })
+        .then(res => res.json())
+        .then(data => {
+            res.status(200).send(data);
+        })
+        .catch(err => {
             return res.status(201).send({
                 message : "Cant able to fetch the fairQoutes, please try again after sometime"
             });
         });
-    
-        const data = await response.json();
-        res.status(200).send(data);
+        
 }

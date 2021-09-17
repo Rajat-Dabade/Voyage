@@ -4,8 +4,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 const cron = require('node-cron');
-const needle = require('needle');
 const db = require("./models");
+const fetch = require('node-fetch');
+const schedule = require('node-schedule');
 
 var corsOptions = {
     origin: '*',
@@ -35,13 +36,12 @@ app.get('/', (req, res, next) => {
     })
 });
 
-cron.schedule('0 0 * * *', () => {
-    needle.get('http://localhost:3000/api/auth/authentication', function(error, response) {
-        if(!error && response.statusCode == 200) {
-            console.log("Token Id generated");
-        }
+schedule.scheduleJob('0 0 * * *', () => {
+    fetch('http://localhost:3000/api/auth/authentication')
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
     })
-    console.log('running a task every day');
 });
 
 const Role = db.role;

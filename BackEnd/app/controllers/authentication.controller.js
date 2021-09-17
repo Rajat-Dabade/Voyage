@@ -1,6 +1,5 @@
 const fs = require('fs');
-const app = require('../app');
-const needle = require('needle');
+const fetch = require('node-fetch');
 
 let authData = {};
 
@@ -13,26 +12,37 @@ fs.readFile(__dirname +'/../config/authenticate.json', "utf-8", (err, jsonString
 })
 
 exports.generateToken = (req, res) => {
-    needle.post('http://api.tektravels.com/SharedServices/SharedData.svc/rest/Authenticate', authData, {json: true}, (err, resp, body) => {
-        if(err) {
-            res.status(201).send({
-                error: "Won't able to generator the String"
-            })
-            return;
-        }
-        let tokenId = {
-            "tokenId": body.TokenId
-        }
-        fs.writeFile(__dirname +'/../config/tokenId.json', JSON.stringify(tokenId), (err) => {
-            if(err) {
-                console.log(err);
-                res.status(201).send({
-                    error: "Wont able to write into file"
-                });
-                return;
-            }
-            res.status(200).send(body);
-        })
-        
+
+    console.log(authData);
+
+    fetch('http://api.tektravels.com/SharedServices/SharedData.svc/rest/Authenticate',
+    {
+        method: 'POST',
+        body: JSON.stringify(authData),
+        headers: {'Content-Type': 'application/json'}
     })
+    
+    .then(res => res.json())
+    
+    .then(data => {
+        console.log(data);
+        if(data.Status != 1) {
+            return res.status(201).send({
+                errorCode: data.Error.ErrorCode,
+                message: data.Error.ErrorMessage
+            });
+        } else {
+            data.tokenId = data.TokenId;
+            fs.writeFile(__dirname +'/../config/tokenId.json', JSON.stringify(data), (err) => {
+                if(err) {
+                    console.log(err);
+                    res.status(201).send({
+                        error: "Wont able to write into file"
+                    });
+                    return;
+                }
+                res.status(200).send(data);
+            })
+        }
+    });
 }

@@ -3,7 +3,7 @@ const fs = require('fs');
 
 let tokenId;
 
-fs.readFile(__dirname + '/../config/tokenId.json', 'utf-8', (err, tokenData) => {
+fs.readFile(__dirname + '/../../config/tokenId.json', 'utf-8', (err, tokenData) => {
     if (err) {
         console.log(err);
     } else {
@@ -22,18 +22,22 @@ exports.getFareRule = async (req, res) => {
 
     console.log("Request object : " + JSON.stringify(requestObject));
 
-    const response = await fetch('http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/FareRule',
+    fetch('http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/FareRule',
         {
             method: 'POST',
             body: JSON.stringify(requestObject),
-            headers: {'Content-Type': 'application/json'}
-        }).catch(err => {
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(res = res.json())
+        .then(data => {
+            res.status(200).send(data);
+        })
+        .catch(err => {
             console.log(err);
             return res.status(201).send({
                 message: "Cant able to fetch the fairRule, please try again after sometime"
             })
         });
 
-    const data = await response.json();
-    res.status(200).send(data);
+
 }

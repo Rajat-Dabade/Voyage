@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 
 let tokenId;
 
-fs.readFile(__dirname + '/../config/tokenId.json', 'utf-8', (err, tokenData) => {
+fs.readFile(__dirname + '/../../config/tokenId.json', 'utf-8', (err, tokenData) => {
     if (err) {
         console.log(err);
     } else {
@@ -43,7 +43,7 @@ exports.book = async (req, res) => {
             },
             "City": req.body.City,
             "CountryCode": req.body.CountryCode,
-            "CellCountryCode" : req.body.CellCountryCode,
+            "CellCountryCode": req.body.CellCountryCode,
             "ContactNo": req.body.ContactNo,
             "Nationality": req.body.Nationality,
             "Email": req.body.Email,
@@ -61,18 +61,19 @@ exports.book = async (req, res) => {
         "TraceId": req.body.TraceId
     }
 
-    const response = await fetch('http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Book',
-    {
-        method: "POST",
-        body: JSON.stringify(requestObject),
-        headers: {'Content-Type': 'application/json'}
-    }).catch(err => {
-        return res.status(201).send({
-            message: "Cant able to fetch the fairQoutes, please try again after sometime"
+    fetch('http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Book',
+        {
+            method: "POST",
+            body: JSON.stringify(requestObject),
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(res => res.json())
+        .then(data => {
+            res.status(202).send(data);
+        })
+        .catch(err => {
+            return res.status(201).send({
+                message: "Cant able to fetch the fairQoutes, please try again after sometime"
+            });
         });
-    });
-
-    const data = await response.json();
-    res.status(202).send(data);
-       
 }

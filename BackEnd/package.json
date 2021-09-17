@@ -25,6 +25,7 @@
     "needle": "^3.0.0",
     "node-cron": "^3.0.0",
     "node-fetch": "^2.0.0",
+    "node-schedule": "^2.0.0",
     "nodemon": "^2.0.12",
     "sequelize": "^6.6.5"
   }
