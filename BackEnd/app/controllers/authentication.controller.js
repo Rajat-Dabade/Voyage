@@ -15,6 +15,13 @@ exports.generateToken = (req, res) => {
 
     console.log(authData);
 
+    if(!authData.ClientId && !authData.UserName && !authData.Password && !authData.EndUserIp) {
+        console.log("Client id is not present");
+        return res.status(201).send({
+            message: "Data request is should be not empty"
+        });
+    }
+
     fetch('http://api.tektravels.com/SharedServices/SharedData.svc/rest/Authenticate',
     {
         method: 'POST',

@@ -12,6 +12,7 @@ fs.readFile(__dirname + '/../../config/tokenId.json', 'utf-8', (err, tokenData) 
 });
 
 exports.getSearchResults = async (req, res) => {
+    console.log(tokenId);
     requestObject = {
         "EndUserIp": req.body.EndUserIp,
         "TokenId": tokenId,
@@ -24,15 +25,18 @@ exports.getSearchResults = async (req, res) => {
         "PreferredAirlines": req.body.PreferredAirlines,
         "Segments": [
             {
-                "Origin": req.body.Origin,
-                "Destination": req.body.Destination,
-                "FlightCabinClass": req.body.FlightCabinClass,
-                "PreferredDepartureTime": req.body.PreferredDepartureTime,
-                "PreferredArrivalTime": req.body.PreferredArrivalTime
+                "Origin": req.body.Segments[0].Origin,
+                "Destination": req.body.Segments[0].Destination,
+                "FlightCabinClass": req.body.Segments[0].FlightCabinClass,
+                "PreferredDepartureTime": req.body.Segments[0].PreferredDepartureTime,
+                "PreferredArrivalTime": req.body.Segments[0].PreferredArrivalTime
             }
         ],
         "Sources": req.body.Sources
     }
+
+
+    console.log("REquest object" + JSON.stringify(requestObject));
 
     fetch('http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Search',
         {

@@ -3,7 +3,7 @@ const fs = require('fs');
 
 let tokenId;
 
-fs.readFile(__dirname + '/../../config/tokenId.json', 'utf-8', (err, tokenData) => {
+fs.readFile(__dirname + '/../../../config/tokenId.json', 'utf-8', (err, tokenData) => {
     if (err) {
         console.log(err);
     } else {
@@ -11,7 +11,7 @@ fs.readFile(__dirname + '/../../config/tokenId.json', 'utf-8', (err, tokenData) 
     }
 });
 
-exports.ticket = async (req, res) => {
+exports.ticketLcc = async (req, res) => {
     requestObject = {
         "PreferredCurrency": null,
         "ResultIndex": req.body.ResultIndex,
