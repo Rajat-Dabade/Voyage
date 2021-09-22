@@ -11,7 +11,7 @@ fs.readFile(__dirname + '/../../config/tokenId.json', 'utf-8', (err, tokenData) 
     }
 });
 
-exports.getFareRule = async (req, res) => {
+exports.getFareRule = (req, res) => {
     console.log(tokenId);
     requestObject = {
         "EndUserIp": req.body.EndUserIp,
@@ -28,9 +28,9 @@ exports.getFareRule = async (req, res) => {
             body: JSON.stringify(requestObject),
             headers: { 'Content-Type': 'application/json' }
         })
-        .then(res = res.json())
+        .then(res => res.json())
         .then(data => {
-            res.status(200).send(data);
+            return res.status(200).send(data);
         })
         .catch(err => {
             console.log(err);

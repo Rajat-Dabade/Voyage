@@ -16,91 +16,205 @@ exports.ticketLcc = async (req, res) => {
         "PreferredCurrency": null,
         "ResultIndex": req.body.ResultIndex,
         "AgentReferenceNo": req.body.AgentReferenceNo,
-        "Passengers": [{
-            "Title": req.body.Title,
-            "FirstName": req.body.FirstName,
-            "LastName": req.body.LastName,
-            "PaxType": req.body.PaxType,
-            "DateOfBirth": req.body.DateOfBirth,
-            "Gender": req.body.Gender,
-            "PassportNo": req.body.PassportNo,
-            "PassportExpiry": req.body.PassportExpiry,
-            "AddressLine1": req.body.AddressLine1,
-            "AddressLine2": req.body.AddressLine2,
-            "Fare": {
-                "BaseFare": req.body.BaseFare,
-                "Tax": req.body.Tax,
-                "YQTax": req.body.YQTax,
-                "AdditionalTxnFeePub": req.body.AdditionalTxnFeePub,
-                "AdditionalTxnFeeOfrd": req.body.AdditionalTxnFeeOfrd,
-                "OtherCharges": req.body.OtherCharges
-            },
-            "City": req.body.City,
-            "CountryCode": req.body.CountryCode,
-            "CountryName": req.body.CountryName,
-            "Nationality": req.body.Nationality,
-            "ContactNo": req.body.ContactNo,
-            "Email": req.body.Email,
-            "IsLeadPax": req.body.IsLeadPax,
-            "FFAirlineCode": req.body.FFAirlineCode,
-            "FFNumber": req.body.FFNumber,
-            "Baggage": [
-                {
-                    "AirlineCode": req.body.AirlineCode,
-                    "FlightNumber": req.body.FlightNumber,
-                    "WayType": req.body.WayType,
-                    "Code": req.body.Code,
-                    "Description": req.body.Description,
-                    "Weight": req.body.Weight,
-                    "Currency": req.body.Currency,
-                    "Price": req.body.Price,
-                    "Origin": req.body.Origin,
-                    "Destination": req.body.Destination
-                }],
-            "MealDynamic": [
-                {
-                    "AirlineCode": req.body.AirlineCode,
-                    "FlightNumber": req.body.FlightNumber,
-                    "WayType": req.body.WayType,
-                    "Code": req.body.Code,
-                    "Description": req.body.Description,
-                    "AirlineDescription": req.body.AirlineDescription,
-                    "Quantity": req.body.Quantity,
-                    "Currency": req.body.Currency,
-                    "Price": req.body.Price,
-                    "Origin": req.body.Origin,
-                    "Destination": req.body.Destination
-                }],
-            "SeatDynamic": [
-                {
-                    "AirlineCode": req.body.AirlineCode,
-                    "FlightNumber": req.body.FlightNumber,
-                    "CraftType": req.body.CraftType,
-                    "Origin": req.body.Origin,
-                    "Destination": req.body.Destination,
-                    "AvailablityType": req.body.AvailablityType,
-                    "Description": req.body.Description,
-                    "Code": req.body.Code,
-                    "RowNo": req.body.RowNo,
-                    "SeatNo": req.body.SeatNo,
-                    "SeatType": req.body.SeatType,
-                    "SeatWayType": req.body.SeatWayType,
-                    "Compartment": req.body.Compartment,
-                    "Deck": req.body.Deck,
-                    "Currency": req.body.Currency,
-                    "Price": req.body.Price
+        // "Passengers": [{
+        //     "Title": req.body.Passengers[i].Title,
+        //     "FirstName": req.body.Passengers[i].FirstName,
+        //     "LastName": req.body.Passengers[i].LastName,
+        //     "PaxType": req.body.Passengers[i].PaxType,
+        //     "DateOfBirth": req.body.Passengers[i].DateOfBirth,
+        //     "Gender": req.body.Passengers[i].Gender,
+        //     "PassportNo": req.body.Passengers[i].PassportNo,
+        //     "PassportExpiry": req.body.Passengers[i].PassportExpiry,
+        //     "AddressLine1": req.body.Passengers[i].AddressLine1,
+        //     "AddressLine2": req.body.Passengers[i].AddressLine2,
+        //     "Fare": {
+        //         "BaseFare": req.body.Passengers[i].Fare.BaseFare,
+        //         "Tax": req.body.Passengers[i].Fare.Tax,
+        //         "YQTax": req.body.Passengers[i].Fare.YQTax,
+        //         "AdditionalTxnFeePub": req.body.Passengers[i].Fare.AdditionalTxnFeePub,
+        //         "AdditionalTxnFeeOfrd": req.body.Passengers[i].Fare.AdditionalTxnFeeOfrd,
+        //         "OtherCharges": req.body.Passengers[i].Fare.OtherCharges
+        //     },
+        //     "City": req.body.Passengers[i].City,
+        //     "CountryCode": req.body.Passengers[i].CountryCode,
+        //     "CountryName": req.body.Passengers[i].CountryName,
+        //     "Nationality": req.body.Passengers[i].Nationality,
+        //     "ContactNo": req.body.Passengers[i].ContactNo,
+        //     "Email": req.body.Passengers[i].Email,
+        //     "IsLeadPax": req.body.Passengers[i].IsLeadPax,
+        //     "FFAirlineCode": req.body.Passengers[i].FFAirlineCode,
+        //     "FFNumber": req.body.Passengers[i].FFNumber,
+        //     "Baggage": [
+        //         {
+        //             "AirlineCode": req.body.Passengers[i].Baggage[j].AirlineCode,
+        //             "FlightNumber": req.body.Passengers[i].Baggage[j].FlightNumber,
+        //             "WayType": req.body.Passengers[i].Baggage[j].WayType,
+        //             "Code": req.body.Passengers[i].Baggage[j].Code,
+        //             "Description": req.body.Passengers[i].Baggage[j].Description,
+        //             "Weight": req.body.Passengers[i].Baggage[j].Weight,
+        //             "Currency": req.body.Passengers[i].Baggage[j].Currency,
+        //             "Price": req.body.Passengers[i].Baggage[j].Price,
+        //             "Origin": req.body.Passengers[i].Baggage[j].Origin,
+        //             "Destination": req.body.Passengers[i].Baggage[j].Destination
+        //         }],
+        //     "MealDynamic": [
+        //         {
+        //             "AirlineCode": req.body.Passengers[i].MealDynamic[j].AirlineCode,
+        //             "FlightNumber": req.body.Passengers[i].MealDynamic[j].FlightNumber,
+        //             "WayType": req.body.Passengers[i].MealDynamic[j].WayType,
+        //             "Code": req.body.Passengers[i].MealDynamic[j].Code,
+        //             "Description": req.body.Passengers[i].MealDynamic[j].Description,
+        //             "AirlineDescription": req.body.Passengers[i].MealDynamic[j].AirlineDescription,
+        //             "Quantity": req.body.Passengers[i].MealDynamic[j].Quantity,
+        //             "Currency": req.body.Passengers[i].MealDynamic[j].Currency,
+        //             "Price": req.body.Passengers[i].MealDynamic[j].Price,
+        //             "Origin": req.body.Passengers[i].MealDynamic[j].Origin,
+        //             "Destination": req.body.Passengers[i].MealDynamic[j].Destination
+        //         }],
+        //     "SeatDynamic": [
+        //         {
+        //             "AirlineCode": req.body.Passengers[i].SeatDynamic[j].AirlineCode,
+        //             "FlightNumber": req.body.Passengers[i].SeatDynamic[j].FlightNumber,
+        //             "CraftType": req.body.Passengers[i].SeatDynamic[j].CraftType,
+        //             "Origin": req.body.Passengers[i].SeatDynamic[j].Origin,
+        //             "Destination": req.body.Passengers[i].SeatDynamic[j].Destination,
+        //             "AvailablityType": req.body.Passengers[i].SeatDynamic[j].AvailablityType,
+        //             "Description": req.body.Passengers[i].SeatDynamic[j].Description,
+        //             "Code": req.body.Passengers[i].SeatDynamic[j].Code,
+        //             "RowNo": req.body.Passengers[i].SeatDynamic[j].RowNo,
+        //             "SeatNo": req.body.Passengers[i].SeatDynamic[j].SeatNo,
+        //             "SeatType": req.body.Passengers[i].SeatDynamic[j].SeatType,
+        //             "SeatWayType": req.body.Passengers[i].SeatDynamic[j].SeatWayType,
+        //             "Compartment": req.body.Passengers[i].SeatDynamic[j].Compartment,
+        //             "Deck": req.body.Passengers[i].SeatDynamic[j].Deck,
+        //             "Currency": req.body.Passengers[i].SeatDynamic[j].Currency,
+        //             "Price": req.body.Passengers[i].SeatDynamic[j].Price
 
-                }],
-            "GSTCompanyAddress": req.body.GSTCompanyAddress,
-            "GSTCompanyContactNumber": req.body.GSTCompanyContactNumber,
-            "GSTCompanyName": req.body.GSTCompanyName,
-            "GSTNumber": req.body.GSTNumber,
-            "GSTCompanyEmail": req.body.GSTCompanyEmail
-        }],
+        //         }],
+        //     "GSTCompanyAddress": req.body.Passengers[i].GSTCompanyAddress,
+        //     "GSTCompanyContactNumber": req.body.Passengers[i].GSTCompanyContactNumber,
+        //     "GSTCompanyName": req.body.Passengers[i].GSTCompanyName,
+        //     "GSTNumber": req.body.Passengers[i].GSTNumber,
+        //     "GSTCompanyEmail": req.body.Passengers[i].GSTCompanyEmail
+        // }],
         "EndUserIp": req.body.EndUserIp,
         "TokenId": tokenId,
         "TraceId": req.body.TraceId
     }
+
+
+
+    const Passengers = [];
+    for (let i = 0; i < req.body.Passengers.length; i++) {
+        Passenger = {
+            "Title": req.body.Passengers[i].Title,
+            "FirstName": req.body.Passengers[i].FirstName,
+            "LastName": req.body.Passengers[i].LastName,
+            "PaxType": req.body.Passengers[i].PaxType,
+            "DateOfBirth": req.body.Passengers[i].DateOfBirth,
+            "Gender": req.body.Passengers[i].Gender,
+            "PassportNo": req.body.Passengers[i].PassportNo,
+            "PassportExpiry": req.body.Passengers[i].PassportExpiry,
+            "AddressLine1": req.body.Passengers[i].AddressLine1,
+            "AddressLine2": req.body.Passengers[i].AddressLine2,
+            "Fare": {
+                "BaseFare": req.body.Passengers[i].Fare.BaseFare,
+                "Tax": req.body.Passengers[i].Fare.Tax,
+                "YQTax": req.body.Passengers[i].Fare.YQTax,
+                "AdditionalTxnFeePub": req.body.Passengers[i].Fare.AdditionalTxnFeePub,
+                "AdditionalTxnFeeOfrd": req.body.Passengers[i].Fare.AdditionalTxnFeeOfrd,
+                "OtherCharges": req.body.Passengers[i].Fare.OtherCharges
+            },
+            "City": req.body.Passengers[i].City,
+            "CountryCode": req.body.Passengers[i].CountryCode,
+            "CountryName": req.body.Passengers[i].CountryName,
+            "Nationality": req.body.Passengers[i].Nationality,
+            "ContactNo": req.body.Passengers[i].ContactNo,
+            "Email": req.body.Passengers[i].Email,
+            "IsLeadPax": req.body.Passengers[i].IsLeadPax,
+            "FFAirlineCode": req.body.Passengers[i].FFAirlineCode,
+            "FFNumber": req.body.Passengers[i].FFNumber,
+
+            //Whether to include this data or not
+            "GSTCompanyAddress": req.body.Passengers[i].GSTCompanyAddress,
+            "GSTCompanyContactNumber": req.body.Passengers[i].GSTCompanyContactNumber,
+            "GSTCompanyName": req.body.Passengers[i].GSTCompanyName,
+            "GSTNumber": req.body.Passengers[i].GSTNumber,
+            "GSTCompanyEmail": req.body.Passengers[i].GSTCompanyEmail
+        }
+
+        if (req.body.Passengers[i].Baggage) {
+            const Baggages = [];
+            for (let j = 0; j < req.body.Passengers[i].Baggage.length; j++) {
+                let Baggage = {
+                    "AirlineCode": req.body.Passengers[i].Baggage[j].AirlineCode,
+                    "FlightNumber": req.body.Passengers[i].Baggage[j].FlightNumber,
+                    "WayType": req.body.Passengers[i].Baggage[j].WayType,
+                    "Code": req.body.Passengers[i].Baggage[j].Code,
+                    "Description": req.body.Passengers[i].Baggage[j].Description,
+                    "Weight": req.body.Passengers[i].Baggage[j].Weight,
+                    "Currency": req.body.Passengers[i].Baggage[j].Currency,
+                    "Price": req.body.Passengers[i].Baggage[j].Price,
+                    "Origin": req.body.Passengers[i].Baggage[j].Origin,
+                    "Destination": req.body.Passengers[i].Baggage[j].Destination
+                }
+                Baggages.push(Baggage);
+            }
+            Passenger.Baggage = Baggages;
+        }
+
+        if (req.body.Passengers[i].MealDynamic) {
+            const MealDynamics = [];
+            for (let j = 0; j < req.body.Passengers[i].MealDynamic.length; j++) {
+                let MealDynamic = {
+                    "AirlineCode": req.body.Passengers[i].MealDynamic[j].AirlineCode,
+                    "FlightNumber": req.body.Passengers[i].MealDynamic[j].FlightNumber,
+                    "WayType": req.body.Passengers[i].MealDynamic[j].WayType,
+                    "Code": req.body.Passengers[i].MealDynamic[j].Code,
+                    "Description": req.body.Passengers[i].MealDynamic[j].Description,
+                    "AirlineDescription": req.body.Passengers[i].MealDynamic[j].AirlineDescription,
+                    "Quantity": req.body.Passengers[i].MealDynamic[j].Quantity,
+                    "Currency": req.body.Passengers[i].MealDynamic[j].Currency,
+                    "Price": req.body.Passengers[i].MealDynamic[j].Price,
+                    "Origin": req.body.Passengers[i].MealDynamic[j].Origin,
+                    "Destination": req.body.Passengers[i].MealDynamic[j].Destination
+                }
+                MealDynamics.push(MealDynamic);
+            }
+            Passenger.MealDynamic = MealDynamics;
+        }
+
+        if (req.body.Passengers[i].SeatDynamic) {
+            const SeatDynamics = [];
+            for (let j = 0; j < req.body.Passengers[i].SeatDynamic.length; j++) {
+                let SeatDynamic = {
+                    "AirlineCode": req.body.Passengers[i].SeatDynamic[j].AirlineCode,
+                    "FlightNumber": req.body.Passengers[i].SeatDynamic[j].FlightNumber,
+                    "CraftType": req.body.Passengers[i].SeatDynamic[j].CraftType,
+                    "Origin": req.body.Passengers[i].SeatDynamic[j].Origin,
+                    "Destination": req.body.Passengers[i].SeatDynamic[j].Destination,
+                    "AvailablityType": req.body.Passengers[i].SeatDynamic[j].AvailablityType,
+                    "Description": req.body.Passengers[i].SeatDynamic[j].Description,
+                    "Code": req.body.Passengers[i].SeatDynamic[j].Code,
+                    "RowNo": req.body.Passengers[i].SeatDynamic[j].RowNo,
+                    "SeatNo": req.body.Passengers[i].SeatDynamic[j].SeatNo,
+                    "SeatType": req.body.Passengers[i].SeatDynamic[j].SeatType,
+                    "SeatWayType": req.body.Passengers[i].SeatDynamic[j].SeatWayType,
+                    "Compartment": req.body.Passengers[i].SeatDynamic[j].Compartment,
+                    "Deck": req.body.Passengers[i].SeatDynamic[j].Deck,
+                    "Currency": req.body.Passengers[i].SeatDynamic[j].Currency,
+                    "Price": req.body.Passengers[i].SeatDynamic[j].Price
+                }
+                SeatDynamics.push(SeatDynamic)
+            }
+            Passenger.SeatDynamic = SeatDynamics;
+        }
+
+        Passengers.push(Passenger);
+    }
+
+    requestObject.Passengers = Passengers;
+
 
     fetch('http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Ticket',
         {

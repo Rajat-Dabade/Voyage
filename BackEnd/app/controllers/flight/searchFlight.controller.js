@@ -12,7 +12,6 @@ fs.readFile(__dirname + '/../../config/tokenId.json', 'utf-8', (err, tokenData) 
 });
 
 exports.getSearchResults = async (req, res) => {
-    console.log(tokenId);
     requestObject = {
         "EndUserIp": req.body.EndUserIp,
         "TokenId": tokenId,
@@ -23,20 +22,31 @@ exports.getSearchResults = async (req, res) => {
         "OneStopFlight": req.body.OneStopFlight,
         "JourneyType": req.body.JourneyType,
         "PreferredAirlines": req.body.PreferredAirlines,
-        "Segments": [
-            {
-                "Origin": req.body.Segments[0].Origin,
-                "Destination": req.body.Segments[0].Destination,
-                "FlightCabinClass": req.body.Segments[0].FlightCabinClass,
-                "PreferredDepartureTime": req.body.Segments[0].PreferredDepartureTime,
-                "PreferredArrivalTime": req.body.Segments[0].PreferredArrivalTime
-            }
-        ],
+        // "Segments": [
+        //     {
+        //         "Origin": req.body.Segments[0].Origin,
+        //         "Destination": req.body.Segments[0].Destination,
+        //         "FlightCabinClass": req.body.Segments[0].FlightCabinClass,
+        //         "PreferredDepartureTime": req.body.Segments[0].PreferredDepartureTime,
+        //         "PreferredArrivalTime": req.body.Segments[0].PreferredArrivalTime
+        //     }
+        // ],
         "Sources": req.body.Sources
     }
 
+    const Segments = [];
+    for(let i = 0; i < req.body.Segments.length; i++) {
+        let segment = {
+            "Origin": req.body.Segments[i].Origin,
+            "Destination": req.body.Segments[i].Destination,
+            "FlightCabinClass": req.body.Segments[i].FlightCabinClass,
+            "PreferredDepartureTime": req.body.Segments[i].PreferredDepartureTime,
+            "PreferredArrivalTime": req.body.Segments[i].PreferredArrivalTime
+        }
+        Segments.push(segment);
+    }
 
-    console.log("REquest object" + JSON.stringify(requestObject));
+    requestObject.Segments = Segments;
 
     fetch('http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Search',
         {

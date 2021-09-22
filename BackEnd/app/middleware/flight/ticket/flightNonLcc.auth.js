@@ -1,13 +1,11 @@
-const { noExtendLeft } = require("sequelize/types/lib/operators");
-
 exports.verifyFlightNonLccData = (req, res, next) => {
-    if (!req.body.EndUserIp
-        || !req.body.TraceId
-        || !req.body.PNR
-        || !req.body.BookingId) {
-            return res.status(201).send({
-                message: "Data request is should be not empty"
-            });
+    if (req.body.EndUserIp === undefined
+        || req.body.TraceId === undefined
+        || req.body.PNR === undefined
+        || req.body.BookingId === undefined) {
+        return res.status(201).send({
+            message: "Data request is should be not empty"
+        });
     }
 
     next();
