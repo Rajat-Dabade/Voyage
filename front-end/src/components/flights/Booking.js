@@ -7,6 +7,7 @@ import Paper from '@mui/material/Paper';
 import ReviewItinerary from './ReviewItinerary';
 import FareRule from './FareRule';
 import TravellerInfomation from './TravellerInfomation';
+import { Button } from '@mui/material';
 
 const Booking = () => {
 
@@ -19,10 +20,14 @@ const Booking = () => {
                             <ReviewItinerary />
                             <FareRule />
                             <TravellerInfomation />
+                            <br></br>
+                            <Button variant="outlined" sx={{ margin: '0 7px' ,width: '94%', padding: '15px'}}>Proceed to Book</Button>
+                            <br></br><br></br>
                         </Grid>
                         <Grid item={true} xs={12} md={4}>
                             <Paper variant="elevation" elevation={12}> This is paper</Paper>
                         </Grid>
+                        
                     </Grid>
                 </Container>
             </Box>
