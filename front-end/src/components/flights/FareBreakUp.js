@@ -18,7 +18,7 @@ const FareBreakUp = () => {
         elevation={12}
         sx={{ marginRight: "40px", borderRadius: "70px" }}
       >
-        <Card sx={{ minWidth: 275 }}>
+        <Card sx={{ minWidth: 275, borderRadius: '20px' }}>
           <CardContent>
 
             <Typography variant="h5" component="div" align='left'>
