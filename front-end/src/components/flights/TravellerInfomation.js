@@ -33,10 +33,12 @@ const ExpandMore = styled((props) => {
 const TravellerInfomation = () => {
 
     const [expanded, setExpanded] = useState(true);
-
     const [travellers, setTravellers] = useState([
         { designation: '', firstName: '', lastName: '', gender: '', dob: '' }
     ]);
+    const [gstNumber, setGstNumber] = useState('');
+    const [companyGstEmail, setCompanyGstEmail] = useState('');
+    const [companyName, setCompanyName] = useState('');
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -49,12 +51,40 @@ const TravellerInfomation = () => {
     }
 
     useEffect(() => {
+        setTravellers([
+            { designation: '', firstName: '', lastName: '', gender: '', dob: '' }
+        ]);
         for (let i = 1; i < 4; i++) {
             setTravellers((prevState) => {
                 return [...prevState, { designation: '', firstName: '', lastName: '', gender: '', dob: '' }]
             });
         }
     }, []);
+
+
+    const inputFieldChangeHandler = (index, event) => {
+        const values = [...travellers];
+        values[index][event.target.name] = event.target.value;
+        setTravellers(values);
+    }
+
+    const getNumberHandler = (value) => {
+        if (isGSTChecked) {
+            setGstNumber(value);
+        }
+    }
+
+    const getCompanyGstEmailHandler = (value) => {
+        if (isGSTChecked) {
+            setCompanyGstEmail(value);
+        }
+    }
+
+    const getCompanyNameHandler = (value) => {
+        if (isGSTChecked) {
+            setCompanyName(value)
+        }
+    }
 
 
     return (
@@ -66,15 +96,14 @@ const TravellerInfomation = () => {
                         avatar={
                             <Avatar sx={{ bgcolor: blue[300] }} aria-label="recipe">
                                 03
-                                        </Avatar>
+                            </Avatar>
                         }
                         action={
                             <ExpandMore
                                 expand={expanded}
                                 onClick={handleExpandClick}
                                 aria-expanded={expanded}
-                                aria-label="show more"
-                            >
+                                aria-label="show more">
                                 <ExpandMoreIcon />
                             </ExpandMore>
                         }
@@ -83,10 +112,7 @@ const TravellerInfomation = () => {
                     />
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
                         <CardContent>
-
-
-                            {travellers.map((traveller, index) => <TravellerInputForm />)}
-
+                            {travellers.map((traveller, index) => <TravellerInputForm key={index} traveller={traveller} index={index} inputFieldChangeHandler={inputFieldChangeHandler} />)}
                             <br></br>
                             <Typography variant="body1" sx={{ marginLeft: '15px', marginTop: '25px', fontWeight: 'bold' }} component="div">Contact Details:</Typography>
                             <Typography sx={{ marginLeft: '15px', fontSize: '14px', marginTop: '10px', color: '#898989' }} component="div">*Ticket will be send to below mobile number and Email Address</Typography>
@@ -98,16 +124,20 @@ const TravellerInfomation = () => {
                                     <TextField id="email" label="E-mail" variant="standard" sx={{ width: 260 }} />
                                 </Grid>
                             </Grid>
-
                             <FormControlLabel sx={{ marginLeft: '7px', marginTop: '15px' }}
                                 label="Add GST details"
                                 control={
                                     <Checkbox onChange={isGSTCheckedHandler} />
                                 }
                             />
-
                             {isGSTChecked ?
-                                <GSTFormInput />
+                                <GSTFormInput
+                                    gstNumber={gstNumber}
+                                    companyGstEmail={companyGstEmail}
+                                    companyName={companyName}
+                                    getNumberHandler={getNumberHandler}
+                                    getCompanyGstEmailHandler={getCompanyGstEmailHandler}
+                                    getCompanyNameHandler={getCompanyNameHandler} />
                                 : null}
 
                             <Button variant="contained" size="large" sx={{ backgroundColor: '#4798FF', marginTop: '15px', marginBottom: '20px', marginRight: '40px', padding: '10px 50px', float: 'right' }}>Continue</Button>
