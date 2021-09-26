@@ -27,10 +27,12 @@ exports.getSsr = async (req, res) => {
         })
         .then(res => res.json())
         .then(data => {
+            data.status = 1;
             res.status(200).send(data);
         })
         .catch(err => {
             return res.status(201).send({
+                status: 0,
                 message: "Cant able to fetch the SSR, please try again after sometime"
             });
         });

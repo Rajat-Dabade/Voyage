@@ -132,7 +132,7 @@ exports.book = async (req, res) => {
         })
         .then(res => res.json())
         .then(data => {
-            res.status(202).send(data);
+            res.status(200).send(data);
         })
         .catch(err => {
             return res.status(201).send({

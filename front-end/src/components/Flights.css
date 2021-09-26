@@ -1,0 +1,20 @@
+.input-field {
+    width: 23ch;
+    display: inline-block;
+}
+
+.date-input-field {
+    margin-left: 25px !important;
+    margin-top: 30px !important;
+    display: inline-block;
+}
+
+.radio-style{
+    margin-bottom: 10px;
+}
+
+.button-input-field {
+    margin-left: 25px !important;
+    margin-top: 30px !important;
+    padding: 14px 35px !important;
+}

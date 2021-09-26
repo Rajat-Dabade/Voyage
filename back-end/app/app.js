@@ -49,7 +49,9 @@ const Role = db.role;
 db.sequelize.sync({force: false}).then(() => {
     console.log("Drop and resync db");
     // initial();
-})
+}).catch(err => {
+    console.log("Cant able to connect to database");
+});
 
 const initial = () => {
     Role.create({
@@ -76,5 +78,6 @@ require('./routes/flight/cancellation/releasePnrRequest.routes')(app);
 require('./routes/flight/cancellation/sendChangeRequest.routes')(app);
 require('./routes/flight/cancellation/getChangeRequestStatus.routes')(app);
 require('./routes/flight/cancellation/cancellationCharges.routes')(app);
+require('./routes/flight/getBookingDetails.routes')(app);
 
 module.exports = app;

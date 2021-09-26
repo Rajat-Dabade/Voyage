@@ -1,4 +1,7 @@
 exports.verifySearchData = (req, res, next) => {
+
+    console.log(req.body);
+
     if (req.body.EndUserIp === undefined
         || req.body.AdultCount === undefined
         || req.body.ChildCount === undefined

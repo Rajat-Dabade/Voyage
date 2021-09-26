@@ -48,6 +48,7 @@ exports.getSearchResults = async (req, res) => {
 
     requestObject.Segments = Segments;
 
+    console.log(requestObject);
     fetch('http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Search',
         {
             method: 'POST',
@@ -60,6 +61,7 @@ exports.getSearchResults = async (req, res) => {
         })
         .catch(err => {
             res.status(201).send({
+                status: 0,
                 message: "Cant able to fetch the Flight, please try again after sometime"
             })
         });

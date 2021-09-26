@@ -60,6 +60,7 @@ exports.signin = (req, res) => {
     }).then(user => {
         if(user == null) {
             res.status(201).send({
+                status: 0,
                 message: "User must me register first"
             });
             return;
@@ -67,6 +68,7 @@ exports.signin = (req, res) => {
         if(user.password === req.body.password) {
             if(!user.activation) {
                 res.status(202).send({
+                    status: 0,
                     message: "User not activated from the admin side. Please wait or contract admin"
                 });
             } else {
@@ -74,6 +76,7 @@ exports.signin = (req, res) => {
                     expiresIn: 86400
                 });
                 return res.status(200).send({
+                    status: 1,
                     id: user.id,
                     username: user.firstName,
                     mobileNumber: user.mobileNumber,
@@ -82,6 +85,7 @@ exports.signin = (req, res) => {
             }
         } else {
             return res.status(201).send({
+                status: 0,
                 message: "Enter passoword is wrong"
             });
         }
