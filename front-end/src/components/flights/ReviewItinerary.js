@@ -12,6 +12,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 
 import Baggage from './Baggage';
 
@@ -39,12 +40,12 @@ const ReviewItinerary = () => {
 
     return (
         <>
-            <Grid item={true} xs={12} md={8}>
-                <Paper variant="elevation" elevation={24} sx={{ marginRight: '40px', borderRadius: '70px' }}>
+            
+                <Paper variant="elevation" elevation={12} sx={{ marginRight: '40px', borderRadius: '70px' }}>
                     <Card sx={{ borderRadius: '20px' }}>
                         <CardHeader
                             avatar={
-                                <Avatar sx={{ bgcolor: blue[200] }} aria-label="recipe">
+                                <Avatar sx={{ bgcolor: blue[400] }} aria-label="recipe">
                                     01
                                             </Avatar>
                             }
@@ -93,14 +94,14 @@ const ReviewItinerary = () => {
                                         </Typography>
                                     </Grid>
                                 </Grid>
+                                <br></br>
                                 <hr></hr>
                                 <Baggage />
+                                <Button variant="contained" size="large" sx={{backgroundColor: '#4798FF', marginTop: '40px', marginBottom: '40px', marginRight: '40px' , padding: '10px 50px', float: 'right'}}>Continue</Button>
                             </CardContent>
                         </Collapse>
                     </Card>
                 </Paper>
-            </Grid>
-
         </>
     )
 }
