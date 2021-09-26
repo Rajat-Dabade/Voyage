@@ -40,68 +40,67 @@ const ReviewItinerary = () => {
 
     return (
         <>
-            
-                <Paper variant="elevation" elevation={12} sx={{ marginRight: '40px', borderRadius: '70px' }}>
-                    <Card sx={{ borderRadius: '20px' }}>
-                        <CardHeader
-                            avatar={
-                                <Avatar sx={{ bgcolor: blue[400] }} aria-label="recipe">
-                                    01
+
+            <Paper variant="elevation" elevation={12} sx={{ marginRight: '40px', borderRadius: '70px' }}>
+                <Card sx={{ borderRadius: '20px' }}>
+                    <CardHeader
+                        avatar={
+                            <Avatar sx={{ bgcolor: blue[400] }} aria-label="recipe">
+                                01
                                             </Avatar>
-                            }
-                            action={
-                                <ExpandMore
-                                    expand={expanded}
-                                    onClick={handleExpandClick}
-                                    aria-expanded={expanded}
-                                    aria-label="show more"
-                                >
-                                    <ExpandMoreIcon />
-                                </ExpandMore>
-                            }
-                            title="Review Itinerary"
-                            titleTypographyProps={{ variant: 'h5' }}
-                        />
-                        <Collapse in={expanded} timeout="auto" unmountOnExit>
-                            <CardContent>
-                                <Grid container spacing={2} sx={{ textAlign: 'center', marginTop: '20px' }}>
-                                    <Grid item={true} xs={12} md={5}>
-                                        <Typography variant="h5" component="div">Indigo</Typography>
-                                        <Typography variant="subtitle1" component="div">Flight code</Typography>
-                                        <Typography variant="body1" sx={{ fontSize: '30px' }} component="div">Delhi</Typography>
-                                        <Typography variant="h6" component="div">19:45</Typography>
-                                        <Typography variant="body1" component="div">Sun, 26 Sep 21</Typography>
-                                        <Typography variant="subtitle1" component="div">Terminal 2,
-                                        Indira Gandhi Airport,
-                                        Delhi
-                                                    </Typography>
-                                    </Grid>
-                                    <Grid item={true} xs={12} md={2} mt={5}>
-                                        <Typography variant="subtitle1" component="div" sx={{ color: '#6A6A6A' }}>2h 5m</Typography>
-                                        <ArrowRightAltIcon sx={{ transform: 'scale(5.2, 2.4)', color: '#D6D6D6' }} />
-                                        <Typography variant="body1" component="div" sx={{ color: '#6A6A6A' }}>Partially Refundable</Typography>
-                                    </Grid>
-                                    <Grid item={true} xs={12} md={5}>
-                                        <Typography variant="h5" component="div">Indigo</Typography>
-                                        <Typography variant="subtitle1" component="div">Flight code</Typography>
-                                        <Typography variant="body1" sx={{ fontSize: '30px' }} component="div">Mumbai</Typography>
-                                        <Typography variant="h6" component="div">19:45</Typography>
-                                        <Typography variant="body1" component="div">Sun, 26 Sep 21</Typography>
-                                        <Typography variant="subtitle1" component="div">
-                                            Terminal 2,
-                                            Indira Gandhi Airport,
-                                            Delhi
+                        }
+                        action={
+                            <ExpandMore
+                                expand={expanded}
+                                onClick={handleExpandClick}
+                                aria-expanded={expanded}
+                                aria-label="show more"
+                            >
+                                <ExpandMoreIcon />
+                            </ExpandMore>
+                        }
+                        title="Review Itinerary"
+                        titleTypographyProps={{ variant: 'h6' }}
+                    />
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                        <CardContent>
+                            <Grid container spacing={2} sx={{ textAlign: 'center' }}>
+                                <Grid item={true} xs={12} md={5}>
+                                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }} component="div">Indigo</Typography>
+                                    <Typography sx={{ fontSize: '12px' }} component="div">G8-127</Typography>
+                                    <Typography variant="body1" sx={{ fontSize: '20px' }} component="div">Delhi</Typography>
+                                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }} component="div">19:45</Typography>
+                                    <Typography sx={{ fontSize: '15px' }} component="div">Sun, 26 Sep 21</Typography>
+                                    <Typography sx={{ fontSize: '13px' }} component="div">Terminal 2,
+                                    Indira Gandhi Airport,
+                                    Delhi
                                         </Typography>
-                                    </Grid>
                                 </Grid>
-                                <br></br>
-                                <hr></hr>
-                                <Baggage />
-                                <Button variant="contained" size="large" sx={{backgroundColor: '#4798FF', marginTop: '40px', marginBottom: '40px', marginRight: '40px' , padding: '10px 50px', float: 'right'}}>Continue</Button>
-                            </CardContent>
-                        </Collapse>
-                    </Card>
-                </Paper>
+                                <Grid item={true} xs={12} md={2} mt={2}>
+                                    <Typography component="div" sx={{ fontSize: '13px',color: '#6A6A6A' }}>2h 5m</Typography>
+                                    <ArrowRightAltIcon sx={{ transform: 'scale(6.2, 1.1)', color: '#D6D6D6' }} />
+                                    <Typography component="div" sx={{ fontSize: '11px', fontWeight: 'bolder' ,color: '#6A6A6A' }}>Partially Refundable</Typography>
+                                </Grid>
+                                <Grid item={true} xs={12} md={5}>
+                                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }} component="div">Indigo</Typography>
+                                    <Typography sx={{ fontSize: '12px' }} component="div">G8-127</Typography>
+                                    <Typography variant="body1" sx={{ fontSize: '20px' }} component="div">Mumbai</Typography>
+                                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }} component="div">19:45</Typography>
+                                    <Typography sx={{ fontSize: '15px' }} component="div">Sun, 26 Sep 21</Typography>
+                                    <Typography sx={{ fontSize: '13px' }} component="div">Terminal 2,
+                                    Indira Gandhi Airport,
+                                    Delhi
+                                        </Typography>
+                                </Grid>
+                            </Grid>
+                            <br></br>
+                            <hr></hr>
+                            <Baggage />
+                            <Button variant="contained" size="large" sx={{ backgroundColor: '#4798FF', marginTop: '10px', marginBottom: '20px', marginRight: '40px', padding: '10px 50px', float: 'right' }}>Continue</Button>
+                        </CardContent>
+                    </Collapse>
+                </Card>
+            </Paper>
         </>
     )
 }

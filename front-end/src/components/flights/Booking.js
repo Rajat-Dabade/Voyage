@@ -13,7 +13,7 @@ const Booking = () => {
     return (
         <>
             <Box mt={6}>
-                <Container maxWidth="xl">
+                <Container maxWidth="lg">
                     <Grid container spacing={0}>
                         <Grid item={true} xs={12} md={8}>
                             <ReviewItinerary />
