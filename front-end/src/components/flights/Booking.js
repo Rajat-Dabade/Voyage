@@ -7,6 +7,7 @@ import Paper from '@mui/material/Paper';
 import ReviewItinerary from './ReviewItinerary';
 import FareRule from './FareRule';
 import TravellerInfomation from './TravellerInfomation';
+import FareBreakUp from './FareBreakUp';
 import { Button } from '@mui/material';
 
 const Booking = () => {
@@ -25,7 +26,8 @@ const Booking = () => {
                             <br></br><br></br>
                         </Grid>
                         <Grid item={true} xs={12} md={4}>
-                            <Paper variant="elevation" elevation={12}> This is paper</Paper>
+                            <FareBreakUp />
+
                         </Grid>
                         
                     </Grid>

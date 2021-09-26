@@ -96,7 +96,7 @@ const ReviewItinerary = () => {
                             <br></br>
                             <hr></hr>
                             <Baggage />
-                            <Button variant="contained" size="large" sx={{ backgroundColor: '#4798FF', marginTop: '10px', marginBottom: '20px', marginRight: '40px', padding: '10px 50px', float: 'right' }}>Continue</Button>
+                            <Button variant="contained" size="large" sx={{ backgroundColor: '#4798FF', marginTop: '10px', marginBottom: '20px', marginRight: '40px', padding: '5px 30px', float: 'right' }}>Continue</Button>
                         </CardContent>
                     </Collapse>
                 </Card>
