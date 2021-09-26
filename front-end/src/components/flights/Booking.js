@@ -8,6 +8,7 @@ import ReviewItinerary from './ReviewItinerary';
 import FareRule from './FareRule';
 import TravellerInfomation from './TravellerInfomation';
 import FareBreakUp from './FareBreakUp';
+import { Button } from '@mui/material';
 
 const Booking = () => {
 
@@ -20,11 +21,15 @@ const Booking = () => {
                             <ReviewItinerary />
                             <FareRule />
                             <TravellerInfomation />
+                            <br></br>
+                            <Button variant="outlined" sx={{ margin: '0 7px' ,width: '94%', padding: '15px'}}>Proceed to Book</Button>
+                            <br></br><br></br>
                         </Grid>
                         <Grid item={true} xs={12} md={4}>
                             <FareBreakUp />
 
                         </Grid>
+                        
                     </Grid>
                 </Container>
             </Box>
