@@ -8,7 +8,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import FlightIcon from '@mui/icons-material/Flight';
@@ -16,9 +16,6 @@ import HotelIcon from '@mui/icons-material/Hotel';
 import Container from '@mui/material/Container';
 import Flights from './components/Flights';
 import Hotels from './components/Hotels';
-import Modal from '@mui/material/Modal';
-import LoginIcon from '@mui/icons-material/Login';
-import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 import Login from './components/login/Login';
 import Booking from './components/flights/Booking';
 
@@ -28,7 +25,6 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import ShowSearchData from './components/flights/ShowSearchData';
-import { TextField } from '@mui/material';
 
 const theme = createTheme({
   palette: {
@@ -78,7 +74,7 @@ function App() {
   const searchDataHandler = (data) => {
     if (data) {
       console.log(data.status)
-      if (data.Response.Error.ErrorCode != 0) {
+      if (data.Response.Error.ErrorCode !== 0) {
         setIsErrorInSearch(true);
         setIsSearchData(false);
       } else {

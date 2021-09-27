@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 
 import ReviewItinerary from './ReviewItinerary';
 import FareRule from './FareRule';

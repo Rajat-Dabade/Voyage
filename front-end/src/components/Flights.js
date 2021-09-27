@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -18,7 +18,6 @@ import './Flights.css'
 
 const Flights = (props) => {
 
-    const [currentDate, setCurrentDate] = useState(new Date());
     const [isReturnDate, setIsReturnDate] = useState(false);
     const [from, setFrom] = useState('');
     const [to, setTo] = useState('');

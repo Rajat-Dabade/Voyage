@@ -4,7 +4,6 @@ import LoginIcon from '@mui/icons-material/Login';
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { TextField } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -35,6 +34,7 @@ const Login = (props) => {
 
     const handleClose = () => {
         props.isLoginedClosed();
+        setIsLoading(false);
         setCheckMessage('');
         setMobileNumber('')
         setPassword('');
