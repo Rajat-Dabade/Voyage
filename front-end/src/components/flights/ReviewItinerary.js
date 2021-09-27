@@ -91,8 +91,8 @@ const ReviewItinerary = (props) => {
                             </Grid>
                             <br></br>
                             <hr></hr>
-                            <Baggage />
-                            <Button variant="contained" size="large" sx={{ backgroundColor: '#4798FF', marginTop: '10px', marginBottom: '20px', marginRight: '40px', padding: '5px 30px', float: 'right' }}>Continue</Button>
+                            <Baggage checkInBaggage={fareQuote.Response.Results.Segments[0][0].Baggage} cabinBaggage = {fareQuote.Response.Results.Segments[0][0].CabinBaggage} />
+                            {/* <Button variant="contained" size="large" sx={{ backgroundColor: '#4798FF', marginTop: '10px', marginBottom: '20px', marginRight: '40px', padding: '5px 30px', float: 'right' }}>Continue</Button> */}
                         </CardContent>
                     </Collapse>
                 </Card>
