@@ -67,7 +67,7 @@ function ShowSearchData(props) {
               <StyledTableCell align="right">{result.Segments[0][0].Destination.ArrTime}</StyledTableCell>
               <StyledTableCell align="right">{result.Segments[0][0].Duration}</StyledTableCell>
               <StyledTableCell align="right">{(+result.Fare.BaseFare) + (+result.Fare.Tax)}</StyledTableCell>
-              <StyledTableCell align="right"><Button variant="contained" endIcon={<ConfirmationNumberIcon />} value={JSON.stringify({ traceId: props.searchData.Response.TraceId, ResultIndex: result.ResultIndex })} onClick={bookHandler}>Book</Button></StyledTableCell>
+              <StyledTableCell align="right"><Button variant="contained" endIcon={<ConfirmationNumberIcon />} value={JSON.stringify({ TraceId: props.searchData.Response.TraceId, ResultIndex: result.ResultIndex })} onClick={bookHandler}>Book</Button></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

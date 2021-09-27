@@ -9,7 +9,9 @@ import TravellerInfomation from './TravellerInfomation';
 import FareBreakUp from './FareBreakUp';
 import { Button } from '@mui/material';
 
-const Booking = () => {
+const Booking = (props) => {
+
+    console.log("FareRulesjfdklsjfklasjfklasjdklfjaskldfjksaljfklasjdfklasj" + props.fareRule);
 
     return (
         <>
@@ -17,7 +19,7 @@ const Booking = () => {
                 <Container maxWidth="lg">
                     <Grid container spacing={0}>
                         <Grid item={true} xs={12} md={8}>
-                            <ReviewItinerary />
+                            <ReviewItinerary fareQuote={props.fareQuote}/>
                             <FareRule />
                             <TravellerInfomation />
                             <br></br>

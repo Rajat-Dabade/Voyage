@@ -50,11 +50,13 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [username, setUsername] = useState('');
   const [isBookingHandler, setIsBookingHandler] = useState(false);
+  const [fareRule, setFareRule] = useState('');
+  const [fareQuote, setFareQuote] = useState('');
 
 
   useEffect(() => {
     const storeddUserLoggedInInformation = localStorage.getItem('isLogin');
-    if(storeddUserLoggedInInformation === '1') {
+    if (storeddUserLoggedInInformation === '1') {
       setIsLogin(true);
       setUsername(localStorage.getItem('username'));
     }
@@ -100,30 +102,59 @@ function App() {
   }
 
   const isLoginHandler = (val) => {
-    if(val === 1) {
+    if (val === 1) {
       setIsLogin(true);
     } else {
       setIsLogin(false);
     }
   }
 
-  const logoutHandler= () => {
+  const logoutHandler = () => {
     localStorage.clear();
     setIsLogin(false);
     setIsBookingHandler(false);
   }
 
   const bookingHandler = (data) => {
-    console.log("App.js booking data" + JSON.stringify(data));
-    setIsBookingHandler(true);
+    data.EndUserIp = '192.168.11.58';
+    
+    const accessToken = localStorage.getItem('accessToken')
+    console.log("App.js booking data" + JSON.stringify(data) + " accessToken" + accessToken);
+    fetch('http://localhost:3000/api/getFareRules', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': accessToken
+      }
+    })
+      .then(res => res.json())
+      .then(fareRuleData => {
+        setFareRule(JSON.stringify(fareRuleData));
+        fetch('http://localhost:3000/api/fareQoute', {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': accessToken
+          }
+        })
+          .then(response => response.json())
+          .then(fareQuoteData => {
+            setFareQuote(JSON.stringify(fareQuoteData));
+            setIsBookingHandler(true);
+          })
+      })
+
+
   }
 
 
   return (
     <>
-      <Login isLoginClicked={isLoginClicked} isLoginedClosed={loginClosedHandler} isLogin={isLoginHandler}/>
+      <Login isLoginClicked={isLoginClicked} isLoginedClosed={loginClosedHandler} isLogin={isLoginHandler} />
       <ThemeProvider theme={theme}>
-      <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1 }}>
           <AppBar position="relative" color="secondary">
             <Toolbar>
               <IconButton
@@ -137,37 +168,37 @@ function App() {
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 Voyage
           </Typography>
-              {isLogin? <><Button color="inherit" variant="outlined">{username}</Button><Button className="logout-btn" onClick={logoutHandler} variant="contained">Logout</Button></>: 
-              <Button color="inherit" variant="outlined" onClick={() => {setIsLoginClicked(true)}}>Login</Button>}
+              {isLogin ? <><Button color="inherit" variant="outlined">{username}</Button><Button className="logout-btn" onClick={logoutHandler} variant="contained">Logout</Button></> :
+                <Button color="inherit" variant="outlined" onClick={() => { setIsLoginClicked(true) }}>Login</Button>}
             </Toolbar>
           </AppBar>
         </Box>
       </ThemeProvider>
-      {isBookingHandler || isLogin ? //make both false
-      <>
-      <ThemeProvider theme={theme}>
-        <br></br>
-        <Box sx={{ flexGrow: 1 }} className="main-header">
-          <Grid container spacing={2} justifyContent="center">
-            <Grid item xs={12} md={10} mt={6}>
-              <Paper elevation={3} style={{ borderRadius: '20px' }}>
-                <Box pt={2} pl={2}>
-                  <Button size="small" color="blackColor" startIcon={<FlightIcon />} style={{ marginRight: '22px', borderBottom: isFlight ? '2px solid #7CDCFF' : '' }} onClick={showFlightHandler}>Flights</Button>
-                  <Button size="medium" color="blackColor" startIcon={<HotelIcon />} style={{ marginRight: '22px', borderBottom: !isFlight ? '2px solid #7CDCFF' : '' }} onClick={showHotelHandler}>Hotels</Button>
-                </Box>
-                {isFlight ? <Flights searchData={searchDataHandler} isSearching={isSearchingHandler} /> : <Hotels />}
+      {!isBookingHandler || !isLogin ? //make both false
+        <>
+          <ThemeProvider theme={theme}>
+            <br></br>
+            <Box sx={{ flexGrow: 1 }} className="main-header">
+              <Grid container spacing={2} justifyContent="center">
+                <Grid item xs={12} md={10} mt={6}>
+                  <Paper elevation={3} style={{ borderRadius: '20px' }}>
+                    <Box pt={2} pl={2}>
+                      <Button size="small" color="blackColor" startIcon={<FlightIcon />} style={{ marginRight: '22px', borderBottom: isFlight ? '2px solid #7CDCFF' : '' }} onClick={showFlightHandler}>Flights</Button>
+                      <Button size="medium" color="blackColor" startIcon={<HotelIcon />} style={{ marginRight: '22px', borderBottom: !isFlight ? '2px solid #7CDCFF' : '' }} onClick={showHotelHandler}>Hotels</Button>
+                    </Box>
+                    {isFlight ? <Flights searchData={searchDataHandler} isSearching={isSearchingHandler} /> : <Hotels />}
 
-              </Paper>
-            </Grid>
-          </Grid>
-        </Box>
-      </ThemeProvider>
-      <br></br><br></br> <br></br>
-      <Container maxWidth="lg" >
-        {isSearching ? <p>Searching for the data</p> : isSearchData ?
-          <ShowSearchData searchData={searchData} isLogin={isLogin} loginOpenHandler={loginOpenHandler} bookingHandler={bookingHandler}/> : isErrorInSearch ? <p>Error occur in search</p> : isSearchedOneTime ? <p>No result found yet</p> : <p>Please search the data</p>}
-      </Container>
-      </> : <Booking /> }
+                  </Paper>
+                </Grid>
+              </Grid>
+            </Box>
+          </ThemeProvider>
+          <br></br><br></br> <br></br>
+          <Container maxWidth="lg" >
+            {isSearching ? <p>Searching for the data</p> : isSearchData ?
+              <ShowSearchData searchData={searchData} isLogin={isLogin} loginOpenHandler={loginOpenHandler} bookingHandler={bookingHandler} /> : isErrorInSearch ? <p>Error occur in search</p> : isSearchedOneTime ? <p>No result found yet</p> : <p>Please search the data</p>}
+          </Container>
+        </> : <Booking fareRule={fareRule} fareQuote={fareQuote} />}
     </>
   );
 }

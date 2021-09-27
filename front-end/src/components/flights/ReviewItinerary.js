@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card';
@@ -30,12 +30,14 @@ const ExpandMore = styled((props) => {
 
 
 
-const ReviewItinerary = () => {
+const ReviewItinerary = (props) => {
 
     const [expanded, setExpanded] = useState(true);
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
+
+    const [fareQuote, setFareQuote] = useState(JSON.parse(props.fareQuote));
 
 
     return (
@@ -66,31 +68,25 @@ const ReviewItinerary = () => {
                         <CardContent>
                             <Grid container spacing={2} sx={{ textAlign: 'center' }}>
                                 <Grid item={true} xs={12} md={5}>
-                                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }} component="div">Indigo</Typography>
-                                    <Typography sx={{ fontSize: '12px' }} component="div">G8-127</Typography>
-                                    <Typography variant="body1" sx={{ fontSize: '20px' }} component="div">Delhi</Typography>
-                                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }} component="div">19:45</Typography>
-                                    <Typography sx={{ fontSize: '15px' }} component="div">Sun, 26 Sep 21</Typography>
-                                    <Typography sx={{ fontSize: '13px' }} component="div">Terminal 2,
-                                    Indira Gandhi Airport,
-                                    Delhi
-                                        </Typography>
+                                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }} component="div">{fareQuote.Response.Results.Segments[0][0].Airline.AirlineName}</Typography>
+                                    <Typography sx={{ fontSize: '12px' }} component="div">{fareQuote.Response.Results.Segments[0][0].Airline.AirlineCode}</Typography>
+                                    <Typography variant="body1" sx={{ fontSize: '20px' }} component="div">{fareQuote.Response.Results.Segments[0][0].Origin.Airport.CityName}</Typography>
+                                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }} component="div">{fareQuote.Response.Results.Segments[0][0].Origin.DepTime.substring(11, 16)}</Typography>
+                                    <Typography sx={{ fontSize: '15px' }} component="div">{(new Date(fareQuote.Response.Results.Segments[0][0].Origin.DepTime.substring(0, 10))).toString().substring(0, 15)}</Typography>
+                                    <Typography sx={{ fontSize: '13px' }} component="div">{`Terminal ` + fareQuote.Response.Results.Segments[0][0].Origin.Airport.Terminal + `, ` + fareQuote.Response.Results.Segments[0][0].Origin.Airport.AirportName + `, ` +  fareQuote.Response.Results.Segments[0][0].Origin.Airport.CityName}</Typography>
                                 </Grid>
                                 <Grid item={true} xs={12} md={2} mt={2}>
-                                    <Typography component="div" sx={{ fontSize: '13px',color: '#6A6A6A' }}>2h 5m</Typography>
+                                    <Typography component="div" sx={{ fontSize: '13px',color: '#6A6A6A' }}>{fareQuote.Response.Results.Segments[0][0].Duration + " min"}</Typography>
                                     <ArrowRightAltIcon sx={{ transform: 'scale(6.2, 1.1)', color: '#D6D6D6' }} />
-                                    <Typography component="div" sx={{ fontSize: '11px', fontWeight: 'bolder' ,color: '#6A6A6A' }}>Partially Refundable</Typography>
+                                    <Typography component="div" sx={{ fontSize: '11px', fontWeight: 'bolder' ,color: '#6A6A6A' }}>{fareQuote.Response.Results.IsRefundable ? `Fully Refundable` : `Not Refundable`}</Typography>
                                 </Grid>
                                 <Grid item={true} xs={12} md={5}>
-                                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }} component="div">Indigo</Typography>
-                                    <Typography sx={{ fontSize: '12px' }} component="div">G8-127</Typography>
-                                    <Typography variant="body1" sx={{ fontSize: '20px' }} component="div">Mumbai</Typography>
-                                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }} component="div">19:45</Typography>
-                                    <Typography sx={{ fontSize: '15px' }} component="div">Sun, 26 Sep 21</Typography>
-                                    <Typography sx={{ fontSize: '13px' }} component="div">Terminal 2,
-                                    Indira Gandhi Airport,
-                                    Delhi
-                                        </Typography>
+                                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }} component="div">{fareQuote.Response.Results.Segments[0][0].Airline.AirlineName}</Typography>
+                                    <Typography sx={{ fontSize: '12px' }} component="div">{fareQuote.Response.Results.Segments[0][0].Airline.AirlineCode}</Typography>
+                                    <Typography variant="body1" sx={{ fontSize: '20px' }} component="div">{fareQuote.Response.Results.Segments[0][0].Destination.Airport.CityName}</Typography>
+                                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }} component="div">{fareQuote.Response.Results.Segments[0][0].Destination.ArrTime.substring(11, 16)}</Typography>
+                                    <Typography sx={{ fontSize: '15px' }} component="div">{(new Date(fareQuote.Response.Results.Segments[0][0].Destination.ArrTime.substring(0, 10))).toString().substring(0, 15)}</Typography>
+                                    <Typography sx={{ fontSize: '13px' }} component="div">{`Terminal ` + fareQuote.Response.Results.Segments[0][0].Destination.Airport.Terminal + `, ` + fareQuote.Response.Results.Segments[0][0].Destination.Airport.AirportName + `, ` +  fareQuote.Response.Results.Segments[0][0].Destination.Airport.CityName}</Typography>
                                 </Grid>
                             </Grid>
                             <br></br>
