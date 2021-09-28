@@ -10,6 +10,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
+import Grid from '@mui/material/Grid';
+
 
 import AutoFillInputFlightList from './flights/AutoFillInputFlightList';
 
@@ -133,7 +135,13 @@ const Flights = (props) => {
 
                 <TextField id="outlined-basic" onChange={departureDateHandler} InputLabelProps={{ shrink: true }} label="Departure date" variant="outlined" type="date" className="input-field date-input-field" />
                 <TextField id="outlined-basic" onChange={returnDateHandler} disabled={!isReturnDate} InputLabelProps={{ shrink: true }} label="Return date" variant="outlined" type="date" className="input-field date-input-field" />
-                {!isSearching ? <Button variant="contained" size="large" className="button-input-field" onClick={onSearchHandler}>Search</Button> :
+    
+            </Box>        <br></br><br></br>
+            <Box component="form">  
+            <TextField id="outlined-basic" label="Adult Count"  variant="outlined" type="number"/>
+            <TextField id="outlined-basic" label="Children Count" className="adult-count" variant="outlined" type="number" />
+            <TextField id="outlined-basic" label="Infant Count" className="adult-count" variant="outlined" type="number" />
+            {!isSearching ? <Button variant="contained" size="large" className="button-input-field" onClick={onSearchHandler}>Search</Button> :
                     <LoadingButton
                         loading
                         loadingPosition="start"
@@ -144,7 +152,6 @@ const Flights = (props) => {
                         Searching
                 </LoadingButton>
                 }
-
             </Box>
             <br></br><br></br><br></br>
         </Box>
