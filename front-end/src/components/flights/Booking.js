@@ -27,8 +27,7 @@ const Booking = (props) => {
                             <br></br><br></br>
                         </Grid>
                         <Grid item={true} xs={12} md={4}>
-                            <FareBreakUp />
-
+                            <FareBreakUp fareQuote={props.fareQuote}/>
                         </Grid>
                         
                     </Grid>
