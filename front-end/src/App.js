@@ -25,6 +25,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import ShowSearchData from './components/flights/ShowSearchData';
+import Ticket from './components/flights/Ticket';
 
 const theme = createTheme({
   palette: {
@@ -199,6 +200,8 @@ function App() {
               <ShowSearchData searchData={searchData} isLogin={isLogin} loginOpenHandler={loginOpenHandler} bookingHandler={bookingHandler} /> : isErrorInSearch ? <p>Error occur in search</p> : isSearchedOneTime ? <p>No result found yet</p> : <p>Please search the data</p>}
           </Container>
         </> : <Booking fareRule={fareRule} fareQuote={fareQuote} />}
+
+        <Ticket />
     </>
   );
 }
