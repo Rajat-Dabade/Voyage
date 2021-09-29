@@ -53,6 +53,8 @@ function App() {
   const [isBookingHandler, setIsBookingHandler] = useState(false);
   const [fareRule, setFareRule] = useState('');
   const [fareQuote, setFareQuote] = useState('');
+  const [isTicketDataAvaiable, setIsTicketDataAvaiable] = useState(false);
+  const [ticketData, setTicketData] = useState({});
 
 
   useEffect(() => {
@@ -114,6 +116,7 @@ function App() {
     localStorage.clear();
     setIsLogin(false);
     setIsBookingHandler(false);
+    setIsSearchData(false)
   }
 
   const bookingHandler = (data) => {
@@ -150,6 +153,11 @@ function App() {
 
   }
 
+  const ticketDataHandler = (data) => {
+    setIsTicketDataAvaiable(true);
+    setTicketData(data);
+  }
+
 
   return (
     <>
@@ -175,7 +183,7 @@ function App() {
           </AppBar>
         </Box>
       </ThemeProvider>
-      {!isBookingHandler || !isLogin ? //make both false
+      {(!isBookingHandler || !isLogin) ? //make both false
         <>
           <ThemeProvider theme={theme}>
             <br></br>
@@ -199,7 +207,8 @@ function App() {
             {isSearching ? <p>Searching for the data</p> : isSearchData ?
               <ShowSearchData searchData={searchData} isLogin={isLogin} loginOpenHandler={loginOpenHandler} bookingHandler={bookingHandler} /> : isErrorInSearch ? <p>Error occur in search</p> : isSearchedOneTime ? <p>No result found yet</p> : <p>Please search the data</p>}
           </Container>
-        </> : <Booking fareRule={fareRule} fareQuote={fareQuote} />}
+        </> :  (isTicketDataAvaiable && isLogin) ? <Ticket ticketData={ticketData}></Ticket> : <Booking fareRule={fareRule} getTicketData={ticketDataHandler} fareQuote={fareQuote} />}
+
     </>
   );
 }

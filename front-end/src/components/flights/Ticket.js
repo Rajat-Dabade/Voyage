@@ -30,7 +30,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const Ticket = () => {
+const Ticket = (props) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -38,14 +38,14 @@ const Ticket = () => {
   };
 
   return (
-   
-        <Paper
-         variant="elevation"
-         elevation={12}
-         sx={{ marginRight: "40px", borderRadius: "70px" }}
-        >
-      
-      <Card sx={{ borderRadius: '20px'}}>
+
+    <Paper
+      variant="elevation"
+      elevation={12}
+      sx={{ margin: "110px 60px", borderRadius: "70px"}}
+    >
+
+      <Card sx={{ borderRadius: '20px' }}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: green[500] }} aria-label="recipe">
@@ -55,47 +55,47 @@ const Ticket = () => {
           title="Ticket"
           titleTypographyProps={{ variant: "h6" }}
         />
-        
+
         <CardContent>
 
-        <Grid container spacing={2}>
-        <Grid item xs={8}>
+          <Grid container spacing={2}>
+            <Grid item xs={8}>
 
-        <Typography variant="body2" color="text.secondary">
-           
-        </Typography>
-                <Typography style={{display: 'inline', float: 'left'}}>PNR Number: </Typography>
-                <Typography style={{display: 'inline', fontWeight: 'bolder'}}>13141323</Typography><br></br><br></br>
-                <Typography style={{display: 'inline'}}>Booking ID: </Typography>
-                <Typography style={{display: 'inline', fontWeight: 'bolder'}}>3123123</Typography><br></br><br></br>
-                <Typography style={{display: 'inline'}}>Transaction ID: </Typography>
-                <Typography style={{display: 'inline', fontWeight: 'bolder'}}>312312312</Typography><br></br><br></br>
-        
-                </Grid>
-            
-                <Grid item xs={4}>
-        
-                <BookmarksIcon sx={{width: '400px', height: '300px'}} color="primary" />
-        
-                </Grid>
-            
-                </Grid>
-        
+              <Typography variant="body2" color="text.secondary">
+
+              </Typography>
+              <Typography style={{ display: 'inline', float: 'left' }}>PNR Number: </Typography>
+              <Typography style={{ display: 'inline', fontWeight: 'bolder' }}>{props.ticketData.pnr}</Typography><br></br><br></br>
+              <Typography style={{ display: 'inline' }}>Booking ID: </Typography>
+              <Typography style={{ display: 'inline', fontWeight: 'bolder' }}>{props.ticketData.bookingId}</Typography><br></br><br></br>
+              <Typography style={{ display: 'inline' }}>Transaction ID: </Typography>
+              <Typography style={{ display: 'inline', fontWeight: 'bolder' }}>{props.ticketData.traceId}</Typography><br></br><br></br>
+
+            </Grid>
+
+            <Grid item xs={4}>
+
+              <BookmarksIcon sx={{ width: '400px', height: '300px' }} color="primary" />
+
+            </Grid>
+
+          </Grid>
+
         </CardContent>
 
-       
-        
-        
+
+
+
         <CardActions disableSpacing>
 
         </CardActions>
 
-        </Card>
+      </Card>
 
     </Paper>
-        
-          
-        
+
+
+
   );
 };
 

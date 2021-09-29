@@ -17,8 +17,6 @@ exports.signup = (req, res) => {
         adharCardNumber: req.body.adharCardNumber,
         password: req.body.password,
         credits: 0.0,
-        createDateTime: req.body.createDateTime,
-        updateDateTime: req.body.updateDateTime,
         activation: req.body.activation
     }).then(user => {
         if(req.body.roles) {
