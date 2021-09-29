@@ -177,7 +177,7 @@ const TravellerInfomation = (props) => {
                     data.IsLeadPax = false;
                 }
 
-                switch(passengerType[count]) {
+                switch (passengerType[count]) {
                     case "Adult":
                         data.PaxType = 1;
                         break;
@@ -210,19 +210,34 @@ const TravellerInfomation = (props) => {
 
         console.log(requestObject);
 
-        fetch('http://localhost:3000/api/ticket/lcc', {
-            method: 'POST',
-            body: JSON.stringify(requestObject),
-            headers: {
-                'Content-Type': 'application/json',
-                'x-access-token': localStorage.getItem('accessToken')
-            }
-        }).then(res => res.json())
-            .then(data => {
-                console.log("Ticketing  : " + JSON.stringify(data));
-            }).catch(err => {
-                console.log("Error occur");
+        if (fareQuote.Response.Results.IsLCC) {
+            fetch('http://localhost:3000/api/ticket/lcc', {
+                method: 'POST',
+                body: JSON.stringify(requestObject),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': localStorage.getItem('accessToken')
+                }
             })
+                .then(res => res.json())
+                .then(data => {
+                    console.log("Ticketing  : " + JSON.stringify(data));
+                }).catch(err => {
+                    console.log("Error occur");
+                })
+        } else {
+            fetch('http://localhost:3000/api/book', {
+                method: 'POST',
+                body: JSON.stringify(requestObject),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': localStorage.getItem('accessToken')
+                }
+            }).then(res => res.json)
+            .then(data => {
+                console.log(data);
+            });
+        }
     }
 
     return (

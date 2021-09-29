@@ -79,5 +79,6 @@ require('./routes/flight/cancellation/sendChangeRequest.routes')(app);
 require('./routes/flight/cancellation/getChangeRequestStatus.routes')(app);
 require('./routes/flight/cancellation/cancellationCharges.routes')(app);
 require('./routes/flight/getBookingDetails.routes')(app);
+require('./routes/booking/flightTicket.routes')(app);
 
 module.exports = app;

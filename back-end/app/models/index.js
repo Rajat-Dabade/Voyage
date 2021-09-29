@@ -25,6 +25,7 @@ db.sequelize = sequelize;
 
 db.user = require("../models/user.model")(sequelize, Sequelize.DataTypes);
 db.role = require('../models/role.model')(sequelize, Sequelize.DataTypes);
+db.userTicket = require('../models/userTicket.model')(sequelize, Sequelize.DataTypes);
 
 db.role.belongsToMany(db.user, {
     through: "user_roles",
@@ -37,6 +38,15 @@ db.user.belongsToMany(db.role, {
     foreignKey: "userId",
     otherKey: "roleId"
 })
+
+db.user.hasMany(db.userTicket, {
+    foreignKey: 'userId'
+});
+db.user.hasOne(db.userTicket, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'RESTRICT'
+});
+db.userTicket.belongsTo(db.user);
 
 db.USER_ROLES = ["user", "admin"];
 
