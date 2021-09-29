@@ -18,6 +18,8 @@ import Flights from './components/Flights';
 import Hotels from './components/Hotels';
 import Login from './components/login/Login';
 import Booking from './components/flights/Booking';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -53,6 +55,14 @@ function App() {
   const [isBookingHandler, setIsBookingHandler] = useState(false);
   const [fareRule, setFareRule] = useState('');
   const [fareQuote, setFareQuote] = useState('');
+
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
 
 
   useEffect(() => {
@@ -91,6 +101,7 @@ function App() {
   }
 
   const isSearchingHandler = (val) => {
+    setOpen(val);
     setIsSearching(val);
   }
 
@@ -117,6 +128,7 @@ function App() {
   }
 
   const bookingHandler = (data) => {
+    setOpen(true);
     data.EndUserIp = '192.168.11.58';
     
     const accessToken = localStorage.getItem('accessToken')
@@ -144,6 +156,7 @@ function App() {
           .then(fareQuoteData => {
             setFareQuote(JSON.stringify(fareQuoteData));
             setIsBookingHandler(true);
+            setOpen(false);
           })
       })
 
@@ -175,6 +188,12 @@ function App() {
           </AppBar>
         </Box>
       </ThemeProvider>
+      <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open}
+          >
+          <CircularProgress color="inherit" />
+        </Backdrop>
       {!isBookingHandler || !isLogin ? //make both false
         <>
           <ThemeProvider theme={theme}>
