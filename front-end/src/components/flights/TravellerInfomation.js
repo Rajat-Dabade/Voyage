@@ -45,6 +45,7 @@ const TravellerInfomation = (props) => {
     const [isProceedToBook, setIsProceedToBook] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState('');
     const [email, setEmail] = useState('');
+    const [address, setAddress] = useState('');
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -134,6 +135,10 @@ const TravellerInfomation = (props) => {
         setEmail(event.target.value);
     }
 
+    const addressHandler = (event) => {
+        setAddress(event.target.value);
+    }
+
     const proceedToBook = (event) => {
         setIsProceedToBook(true);
         let passengerCount = 0;
@@ -155,7 +160,7 @@ const TravellerInfomation = (props) => {
                     Gender: 1,
                     PassportNo: "",
                     PassportExpiry: "",
-                    AddressLine1: "123, Test",
+                    AddressLine1: address,
                     AddressLine2: "",
                     Fare: {
                         Currency: fareQuote.Response.Results.FareBreakdown[i].Currency,
