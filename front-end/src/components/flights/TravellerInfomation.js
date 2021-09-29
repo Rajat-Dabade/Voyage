@@ -30,7 +30,7 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-const TravellerInfomation = () => {
+const TravellerInfomation = (props) => {
 
     const [expanded, setExpanded] = useState(true);
     const [travellers, setTravellers] = useState([
@@ -40,25 +40,60 @@ const TravellerInfomation = () => {
     const [companyGstEmail, setCompanyGstEmail] = useState('');
     const [companyName, setCompanyName] = useState('');
 
+    const [passengerType, setPassengerType] = useState([]);
+
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
 
     const [isGSTChecked, setIsGSTChecked] = useState(false);
 
+    const [fareQuote, setFareQuote] = useState({});
+
     const isGSTCheckedHandler = () => {
         setIsGSTChecked(!isGSTChecked);
     }
 
     useEffect(() => {
-        setTravellers([
-            { designation: '', firstName: '', lastName: '', gender: '', dob: '' }
-        ]);
-        for (let i = 1; i < 4; i++) {
+
+        const fareQuoteData = JSON.parse(props.fareQuote);
+        setFareQuote(fareQuoteData);
+        let count = 0;
+        setTravellers([]);
+        setPassengerType([]);
+        for (let i = 0; i < 3; i++) {
+            if (fareQuoteData.Response.Results.FareBreakdown[i] !== undefined)
+                count = count + fareQuoteData.Response.Results.FareBreakdown[i].PassengerCount;
+        }
+        for (let i = 0; i < fareQuoteData.Response.Results.FareBreakdown.length; i++) {
+            for (let j = 0; j < fareQuoteData.Response.Results.FareBreakdown[i].PassengerCount; j++) {
+                switch (fareQuoteData.Response.Results.FareBreakdown[i].PassengerType) {
+                    case 1:
+                        setPassengerType((prevState) => {
+                            return [...prevState, "Adult"];
+                        });
+                        break;
+                    case 2:
+                        setPassengerType((prevState) => {
+                            return [...prevState, "Children"];
+                        });
+                        break;
+                    case 3:
+                        setPassengerType((prevState) => {
+                            return [...prevState, "Infant"];
+                        });
+                        break;
+                }
+            }
+
+        }
+        for (let i = 0; i < count; i++) {
             setTravellers((prevState) => {
                 return [...prevState, { designation: '', firstName: '', lastName: '', gender: '', dob: '' }]
             });
         }
+
+        console.log("Passenger type jfaksldjfklasjfklasjlf: " + JSON.stringify(passengerType));
     }, []);
 
 
@@ -66,6 +101,7 @@ const TravellerInfomation = () => {
         const values = [...travellers];
         values[index][event.target.name] = event.target.value;
         setTravellers(values);
+        console.log(travellers);
     }
 
     const getNumberHandler = (value) => {
@@ -86,6 +122,108 @@ const TravellerInfomation = () => {
         }
     }
 
+    const proceedToBook = (event) => {
+
+        let passengerCount = 0;
+        for (let i = 0; i < 3; i++) {
+            if (fareQuote.Response.Results.FareBreakdown[i] !== undefined)
+                passengerCount = passengerCount + fareQuote.Response.Results.FareBreakdown[i].PassengerCount;
+        }
+        const passenger = [];
+        console.log("Passenger Count : " + passengerCount)
+        let data = {};
+        let count = 0;
+        for (let i = 0; i < fareQuote.Response.Results.FareBreakdown.length; i++) {
+            for (let j = 0; j < fareQuote.Response.Results.FareBreakdown[i].PassengerCount; j++) {
+                data = {
+                    Title: travellers[count].designation,
+                    FirstName: travellers[count].firstName,
+                    LastName: travellers[count].lastName,
+                    DateOfBirth: travellers[count].dob + "T00:00:00",
+                    Gender: 1,
+                    PassportNo: "",
+                    PassportExpiry: "",
+                    AddressLine1: "123, Test",
+                    AddressLine2: "",
+                    Fare: {
+                        Currency: fareQuote.Response.Results.FareBreakdown[i].Currency,
+                        BaseFare: fareQuote.Response.Results.FareBreakdown[i].BaseFare / fareQuote.Response.Results.FareBreakdown[i].PassengerCount,
+                        Tax: fareQuote.Response.Results.FareBreakdown[i].Tax / fareQuote.Response.Results.FareBreakdown[i].PassengerCount,
+                        YQTax: fareQuote.Response.Results.FareBreakdown[i].YQTax / fareQuote.Response.Results.FareBreakdown[i].PassengerCount,
+                        AdditionalTxnFeePub: fareQuote.Response.Results.FareBreakdown[i].AdditionalTxnFeePub / fareQuote.Response.Results.FareBreakdown[i].PassengerCount,
+                        AdditionalTxnFeeOfrd: fareQuote.Response.Results.FareBreakdown[i].AdditionalTxnFeeOfrd / fareQuote.Response.Results.FareBreakdown[i].PassengerCount,
+                        OtherCharges: fareQuote.Response.Results.Fare.OtherCharges,
+                        Discount: fareQuote.Response.Results.Fare.Discount,
+                        PublishedFare: fareQuote.Response.Results.Fare.PublishedFare,
+                        OfferedFare: fareQuote.Response.Results.Fare.OfferedFare,
+                        TdsOnCommission: fareQuote.Response.Results.Fare.TdsOnCommission,
+                        TdsOnPLB: fareQuote.Response.Results.Fare.TdsOnPLB,
+                        TdsOnIncentive: fareQuote.Response.Results.Fare.TdsOnIncentive,
+                        ServiceFee: fareQuote.Response.Results.Fare.ServiceFee,
+                        AirTransFee: fareQuote.Response.Results.Fare.AirTransFee ? fareQuote.Response.Results.Fare.AirTransFee : 0,
+                        TransactionFee: fareQuote.Response.Results.Fare.TransactionFee ? fareQuote.Response.Results.Fare.TransactionFee : 0
+                    },
+                    City: fareQuote.Response.Results.Segments[0][0].Origin.Airport.CityName,
+                    CountryCode: fareQuote.Response.Results.Segments[0][0].Origin.Airport.CountryCode,
+                    CountryName: fareQuote.Response.Results.Segments[0][0].Origin.Airport.CountryName,
+                    CellCountryCode: "+92581-",
+                    ContactNo: "1234567890",
+                    Nationality: "IN",
+                    Email: "harsh@tbtq.in"
+                }
+                if (count === 0) {
+                    data.IsLeadPax = true;
+                } else {
+                    data.IsLeadPax = false;
+                }
+
+                switch(passengerType[count]) {
+                    case "Adult":
+                        data.PaxType = 1;
+                        break;
+                    case "Children":
+                        data.PaxType = 2;
+                        break;
+                    case "Infant":
+                        data.PaxType = 3;
+                        break;
+                }
+
+                if (isGSTChecked) {
+                    data.GSTCompanyAddress = "";
+                    data.GSTCompanyContactNumber = null;
+                    data.GSTCompanyName = companyName;
+                    data.GSTNumber = gstNumber;
+                    data.GSTCompanyEmail = companyGstEmail;
+                }
+                count++;
+                passenger.push(data);
+            }
+        }
+
+        const requestObject = {
+            EndUserIp: "192.168.11.120",
+            TraceId: fareQuote.Response.TraceId,
+            ResultIndex: fareQuote.Response.Results.ResultIndex,
+            Passengers: [...passenger]
+        }
+
+        console.log(requestObject);
+
+        fetch('http://localhost:3000/api/ticket/lcc', {
+            method: 'POST',
+            body: JSON.stringify(requestObject),
+            headers: {
+                'Content-Type': 'application/json',
+                'x-access-token': localStorage.getItem('accessToken')
+            }
+        }).then(res => res.json())
+            .then(data => {
+                console.log("Ticketing  : " + JSON.stringify(data));
+            }).catch(err => {
+                console.log("Error occur");
+            })
+    }
 
     return (
         <>
@@ -112,7 +250,7 @@ const TravellerInfomation = () => {
                     />
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
                         <CardContent>
-                            {travellers.map((traveller, index) => <TravellerInputForm key={index} traveller={traveller} index={index} inputFieldChangeHandler={inputFieldChangeHandler} />)}
+                            {travellers.map((traveller, index) => <TravellerInputForm passengerType={passengerType[index]} key={index} traveller={traveller} index={index} inputFieldChangeHandler={inputFieldChangeHandler} />)}
                             <br></br>
                             <Typography variant="body1" sx={{ marginLeft: '15px', marginTop: '25px', fontWeight: 'bold' }} component="div">Contact Details:</Typography>
                             <Typography sx={{ marginLeft: '15px', fontSize: '14px', marginTop: '10px', color: '#898989' }} component="div">*Ticket will be send to below mobile number and Email Address</Typography>
@@ -140,7 +278,7 @@ const TravellerInfomation = () => {
                                     getCompanyNameHandler={getCompanyNameHandler} />
                                 : null}
 
-                            <Button variant="contained" size="large" sx={{ backgroundColor: '#4798FF', marginTop: '15px', marginBottom: '20px', marginRight: '40px', padding: '10px 50px', float: 'right' }}>Continue</Button>
+                            <Button variant="contained" size="large" sx={{ backgroundColor: '#4798FF', marginTop: '15px', marginBottom: '20px', marginRight: '40px', padding: '10px 50px', float: 'right' }} onClick={proceedToBook}>Proceed to Book</Button>
 
                         </CardContent>
                     </Collapse>

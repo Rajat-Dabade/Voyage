@@ -13,6 +13,16 @@ const Booking = (props) => {
 
     console.log("FareRulesjfdklsjfklasjfklasjdklfjaskldfjksaljfklasjdfklasj" + props.fareRule);
 
+    const collectData = (data, isGst) => {
+        console.log(data, isGst);
+    }
+
+    const travellerData = {
+        Adult : 2,
+        Childen : 1,
+        Infant: 1
+    }
+
     return (
         <>
             <Box mt={6}>
@@ -21,10 +31,8 @@ const Booking = (props) => {
                         <Grid item={true} xs={12} md={8}>
                             <ReviewItinerary fareQuote={props.fareQuote}/>
                             <FareRule />
-                            <TravellerInfomation />
-                            <br></br>
-                            <Button variant="outlined" sx={{ margin: '0 7px' ,width: '94%', padding: '15px'}}>Proceed to Book</Button>
-                            <br></br><br></br>
+                            <TravellerInfomation fareQuote={props.fareQuote}/>
+                            <br></br><br></br><br></br>
                         </Grid>
                         <Grid item={true} xs={12} md={4}>
                             <FareBreakUp fareQuote={props.fareQuote}/>

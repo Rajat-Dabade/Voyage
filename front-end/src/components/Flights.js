@@ -73,7 +73,7 @@ const Flights = (props) => {
                 console.log("One way flight booking api")
                 const data = {
                     EndUserIp: "192.168.10.10",
-                    AdultCount: "2",
+                    AdultCount: 2,
                     ChildCount: 1,
                     InfantCount: 1,
                     DirectFlight: false,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { Grid } from '@mui/material';
@@ -19,13 +19,16 @@ const TravellerInputForm = (props) => {
         props.inputFieldChangeHandler(index, event);
     };
 
+
     return (
         <div key={props.index}>
-            <Typography variant="body1" component="div" sx={{ marginLeft: '15px', fontWeight: 'bold', marginTop: '14px' }}>Adults: </Typography>
-            <RadioGroup sx={{ marginLeft: '15px', marginTop: '10px' }} row aria-label="degination" name="designation" onChange={(event) => props.inputFieldChangeHandler(props.index, event)}>
-                <FormControlLabel value="Mr" control={<Radio />} label="Mr" />
-                <FormControlLabel value="Ms" control={<Radio />} label="Ms" />
-                <FormControlLabel value="Mrs" control={<Radio />} label="Mrs" />
+            <Typography variant="body1" component="div" sx={{ marginLeft: '15px', fontWeight: 'bold', marginTop: '14px' }}>{props.passengerType}: </Typography>
+            <RadioGroup sx={{ marginLeft: '15px', marginTop: '10px' }} row aria-label="designation" name="designation" onChange={(event) => props.inputFieldChangeHandler(props.index, event)}>
+                {props.passengerType === "Adult"? 
+                    <><FormControlLabel value="Mr" control={<Radio />} label="Mr" />
+                    <FormControlLabel value="Mrs" control={<Radio />} label="Mrs" /></> :  
+                    <><FormControlLabel value="Miss" control={<Radio />} label="Miss" />
+                    <FormControlLabel value="Mstr" control={<Radio />} label="Mstr" /></> }
             </RadioGroup>
 
 
