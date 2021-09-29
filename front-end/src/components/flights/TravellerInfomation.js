@@ -41,9 +41,10 @@ const TravellerInfomation = (props) => {
     const [gstNumber, setGstNumber] = useState('');
     const [companyGstEmail, setCompanyGstEmail] = useState('');
     const [companyName, setCompanyName] = useState('');
-
     const [passengerType, setPassengerType] = useState([]);
     const [isProceedToBook, setIsProceedToBook] = useState(false);
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [email, setEmail] = useState('');
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -125,6 +126,14 @@ const TravellerInfomation = (props) => {
         }
     }
 
+    const phoneNumberHandler = (event) => {
+        setPhoneNumber(event.target.value);
+    }
+
+    const emailHandler = (event) => {
+        setEmail(event.target.value);
+    }
+
     const proceedToBook = (event) => {
         setIsProceedToBook(true);
         let passengerCount = 0;
@@ -169,10 +178,10 @@ const TravellerInfomation = (props) => {
                     City: fareQuote.Response.Results.Segments[0][0].Origin.Airport.CityName,
                     CountryCode: fareQuote.Response.Results.Segments[0][0].Origin.Airport.CountryCode,
                     CountryName: fareQuote.Response.Results.Segments[0][0].Origin.Airport.CountryName,
-                    CellCountryCode: "+92581-",
-                    ContactNo: "1234567890",
+                    CellCountryCode: "+91",
+                    ContactNo: phoneNumber,
                     Nationality: "IN",
-                    Email: "harsh@tbtq.in"
+                    Email: email
                 }
                 if (count === 0) {
                     data.IsLeadPax = true;
@@ -317,11 +326,14 @@ const TravellerInfomation = (props) => {
                             <Typography variant="body1" sx={{ marginLeft: '15px', marginTop: '25px', fontWeight: 'bold' }} component="div">Contact Details:</Typography>
                             <Typography sx={{ marginLeft: '15px', fontSize: '14px', marginTop: '10px', color: '#898989' }} component="div">*Ticket will be send to below mobile number and Email Address</Typography>
                             <Grid container ml={2} mr={2} mt={1} spacing={4}>
-                                <Grid xs={12} md={6} lg={6} xl={6}>
-                                    <TextField id="phone" label="Phone" variant="standard" sx={{ width: 260 }} />
+                                <Grid xs={12} md={4} lg={4} xl={4}>
+                                    <TextField id="phone" label="Phone" value={phoneNumber} variant="standard" sx={{ width: 260 }} onChange={phoneNumberHandler}/>
                                 </Grid>
-                                <Grid xs={12} md={6} lg={6} xl={6}>
-                                    <TextField id="email" label="E-mail" variant="standard" sx={{ width: 260 }} />
+                                <Grid xs={12} md={4} lg={4} xl={4}>
+                                    <TextField id="email" value={email} onChange={emailHandler} label="E-mail" variant="standard" sx={{ width: 260 }} />
+                                </Grid>
+                                <Grid xs={12} md={4} lg={4} xl={4}>
+                                    <TextField id="Address" value={address} onChange={addressHandler} label="Address" variant="standard" sx={{ width: 260 }} />
                                 </Grid>
                             </Grid>
                             <FormControlLabel sx={{ marginLeft: '7px', marginTop: '15px' }}
