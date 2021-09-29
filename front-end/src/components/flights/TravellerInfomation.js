@@ -221,7 +221,27 @@ const TravellerInfomation = (props) => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log("Ticketing  : " + JSON.stringify(data));
+
+                    const dbRequestObject = {
+                        pnr: data.Response.Response.PNR,
+                        bookingId: data.Response.Response.BookingId,
+                        traceId: data.Response.TraceId,
+                        isLcc: true,
+                        isTicketDone: true
+                    }
+
+                    fetch('http://localhost:3000/api/create/ticket', {
+                        method: 'POST',
+                        body: JSON.stringify(dbRequestObject),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-access-token': localStorage.getItem('accessToken')
+                        }
+                    }).then(res => res.json())
+                    .then(dbData => {
+                        console.log(dbData);
+                    })
+
                 }).catch(err => {
                     console.log("Error occur");
                 })
@@ -234,9 +254,29 @@ const TravellerInfomation = (props) => {
                     'x-access-token': localStorage.getItem('accessToken')
                 }
             }).then(res => res.json())
-            .then(data => {
-                console.log(data);
-            });
+                .then(data => {
+                    
+                    const dbRequestObject = {
+                        pnr: data.Response.Response.PNR,
+                        bookingId: data.Response.Response.BookingId,
+                        traceId: data.Response.TraceId,
+                        isLcc: false,
+                        isTicketDone: false
+                    }
+
+                    fetch('http://localhost:3000/api/create/ticket', {
+                        method: 'POST',
+                        body: JSON.stringify(dbRequestObject),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-access-token': localStorage.getItem('accessToken')
+                        }
+                    }).then(res => res.json())
+                    .then(dbData => {
+                        console.log(dbData);
+                    })
+
+                });
         }
     }
 
