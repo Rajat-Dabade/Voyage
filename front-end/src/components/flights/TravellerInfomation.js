@@ -233,7 +233,7 @@ const TravellerInfomation = (props) => {
                     'Content-Type': 'application/json',
                     'x-access-token': localStorage.getItem('accessToken')
                 }
-            }).then(res => res.json)
+            }).then(res => res.json())
             .then(data => {
                 console.log(data);
             });
