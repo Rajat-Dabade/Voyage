@@ -27,6 +27,9 @@ const Flights = (props) => {
     const [returnDate, setReturnDate] = useState('');
     const [journeyType, setJourney] = useState(1);
     const [isSearching, setIsSearching] = useState(false);
+    const [adultCount, setAdutlCount] = useState(0);
+    const [childrenCount, setChildrenCount] = useState(0);
+    const [infantCount, setInfantCount] = useState(0);
 
     const radioChangeHandler = (e) => {
         if (e.target.value === "2") {
@@ -56,6 +59,18 @@ const Flights = (props) => {
         setReturnDate(e.target.value);
     }
 
+    const adultCountHandler = (event) => {
+        setAdutlCount(event.target.value);
+    }
+
+    const childrenCountHandler = (event) => {
+        setChildrenCount(event.target.value);
+    }
+
+    const infantCountHandler = (event) => {
+        setInfantCount(event.target.value);
+    }
+
 
     const onSearchHandler = () => {
         setIsSearching(true);
@@ -63,11 +78,19 @@ const Flights = (props) => {
         if (isReturnDate) {
             if (from.trim() === '' || to.trim() === '' || departureDate.trim() === '' || returnDate.trim() === '') {
                 alert("Invalid Values");
-            } else {
-                alert("sucess" + from);
+                setIsSearching(false);
+                props.isSearching(false);
+            } else if(adultCount === 0 && childrenCount === 0 && infantCount === 0) {
+                alert("Invalid Values");
+                setIsSearching(false);
+                props.isSearching(false);
             }
         } else {
             if (from.trim() === '' || to.trim() === '' || departureDate.trim() === '') {
+                alert("Invalid Values");
+                setIsSearching(false);
+                props.isSearching(false);
+            } else if(adultCount === 0 && childrenCount === 0 && infantCount === 0) {
                 alert("Invalid Values");
                 setIsSearching(false);
                 props.isSearching(false);
@@ -75,10 +98,10 @@ const Flights = (props) => {
                 console.log("One way flight booking api")
                 const data = {
                     EndUserIp: "192.168.10.10",
-                    AdultCount: 2,
-                    ChildCount: 1,
-                    InfantCount: 1,
-                    DirectFlight: false,
+                    AdultCount: adultCount,
+                    ChildCount: childrenCount,
+                    InfantCount: infantCount,
+                    DirectFlight: true,
                     OneStopFlight: false,
                     JourneyType: journeyType,
                     PreferredAirlines: null,
@@ -138,9 +161,38 @@ const Flights = (props) => {
     
             </Box>        <br></br><br></br>
             <Box component="form">  
-            <TextField id="outlined-basic" label="Adult Count"  variant="outlined" type="number"/>
-            <TextField id="outlined-basic" label="Children Count" className="adult-count" variant="outlined" type="number" />
-            <TextField id="outlined-basic" label="Infant Count" className="adult-count" variant="outlined" type="number" />
+            <TextField 
+                id="outlined-basic" 
+                label="Adult Count" 
+                InputLabelProps={{ shrink: true }} 
+                inputProps={{ min: 0, max: 10 }} 
+                sx={{width: '150px'}} 
+                value={adultCount}  
+                variant="outlined" 
+                type="number" 
+                onChange={adultCountHandler} />
+            <TextField 
+                id="outlined-basic" 
+                label="Children Count" 
+                className="adult-count" 
+                InputLabelProps={{ shrink: true }} 
+                inputProps={{ min: 0, max: 10 }} 
+                sx={{width: '150px'}} 
+                variant="outlined" 
+                type="number"
+                value={childrenCount} 
+                onChange={childrenCountHandler}/>
+            <TextField 
+                id="outlined-basic" 
+                label="Infant Count" 
+                className="adult-count" 
+                InputLabelProps={{ shrink: true }} 
+                inputProps={{ min: 0, max: 10 }} 
+                sx={{width: '150px'}} 
+                variant="outlined" 
+                type="number" 
+                value={infantCount}
+                onChange={infantCountHandler} />
             {!isSearching ? <Button variant="contained" size="large" className="button-input-field" onClick={onSearchHandler}>Search</Button> :
                     <LoadingButton
                         loading
