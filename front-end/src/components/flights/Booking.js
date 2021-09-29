@@ -23,6 +23,10 @@ const Booking = (props) => {
         Infant: 1
     }
 
+    const ticketDataHandler = (data) => {
+        props.getTicketData(data);
+    }
+
     return (
         <>
             <Box mt={6}>
@@ -31,7 +35,7 @@ const Booking = (props) => {
                         <Grid item={true} xs={12} md={8}>
                             <ReviewItinerary fareQuote={props.fareQuote}/>
                             <FareRule />
-                            <TravellerInfomation fareQuote={props.fareQuote}/>
+                            <TravellerInfomation getTicketData={ticketDataHandler} fareQuote={props.fareQuote}/>
                             <br></br><br></br><br></br>
                         </Grid>
                         <Grid item={true} xs={12} md={4}>

@@ -15,6 +15,8 @@ import { Grid } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
+import SaveIcon from '@mui/icons-material/Save';
 
 import TravellerInputForm from './TravellerInputForm';
 import GSTFormInput from './GSTFormInput';
@@ -41,6 +43,7 @@ const TravellerInfomation = (props) => {
     const [companyName, setCompanyName] = useState('');
 
     const [passengerType, setPassengerType] = useState([]);
+    const [isProceedToBook, setIsProceedToBook] = useState(false);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -123,7 +126,7 @@ const TravellerInfomation = (props) => {
     }
 
     const proceedToBook = (event) => {
-
+        setIsProceedToBook(true);
         let passengerCount = 0;
         for (let i = 0; i < 3; i++) {
             if (fareQuote.Response.Results.FareBreakdown[i] !== undefined)
@@ -222,6 +225,8 @@ const TravellerInfomation = (props) => {
                 .then(res => res.json())
                 .then(data => {
 
+                    console.log("LCC ticket DAta : " + JSON.stringify(data));
+                    
                     const dbRequestObject = {
                         pnr: data.Response.Response.PNR,
                         bookingId: data.Response.Response.BookingId,
@@ -239,8 +244,9 @@ const TravellerInfomation = (props) => {
                         }
                     }).then(res => res.json())
                     .then(dbData => {
-                        console.log(dbData);
-                    })
+                        setIsProceedToBook(false);
+                        props.getTicketData(dbRequestObject);
+                    });
 
                 }).catch(err => {
                     console.log("Error occur");
@@ -255,7 +261,7 @@ const TravellerInfomation = (props) => {
                 }
             }).then(res => res.json())
                 .then(data => {
-                    
+                    console.log("Booking DAta : " + JSON.stringify(data));
                     const dbRequestObject = {
                         pnr: data.Response.Response.PNR,
                         bookingId: data.Response.Response.BookingId,
@@ -273,7 +279,8 @@ const TravellerInfomation = (props) => {
                         }
                     }).then(res => res.json())
                     .then(dbData => {
-                        console.log(dbData);
+                        setIsProceedToBook(false);
+                        props.getTicketData(dbRequestObject);
                     })
 
                 });
@@ -332,9 +339,17 @@ const TravellerInfomation = (props) => {
                                     getCompanyGstEmailHandler={getCompanyGstEmailHandler}
                                     getCompanyNameHandler={getCompanyNameHandler} />
                                 : null}
-
-                            <Button variant="contained" size="large" sx={{ backgroundColor: '#4798FF', marginTop: '15px', marginBottom: '20px', marginRight: '40px', padding: '10px 50px', float: 'right' }} onClick={proceedToBook}>Proceed to Book</Button>
-
+                            {isProceedToBook ? <LoadingButton
+                                                    loading
+                                                    loadingPosition="start"
+                                                    startIcon={<SaveIcon />}
+                                                    variant="outlined"
+                                                    sx={{ backgroundColor: '#4798FF', marginTop: '15px', marginBottom: '20px', marginRight: '40px', padding: '10px 50px', float: 'right' }}
+                                                    >
+                                                    Reserving your seat
+                                                    </LoadingButton> :
+                                <Button variant="contained" size="large" sx={{ backgroundColor: '#4798FF', marginTop: '15px', marginBottom: '20px', marginRight: '40px', padding: '10px 50px', float: 'right' }} onClick={proceedToBook}>Proceed to Book</Button>
+                            }
                         </CardContent>
                     </Collapse>
                 </Card>
